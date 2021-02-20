@@ -1,4 +1,4 @@
 # livetime
 Organize your projects and manage your working time
 
-![LiveTime Logo](assets/logo.svg)
+![LiveTime Logo](public/assets/logo.svg)
