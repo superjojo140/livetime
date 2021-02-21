@@ -21,9 +21,14 @@
 
 <body>
 
-    <div class="row main-view">
+    <div class="row container-fluid">
 
-        <nav class="col-md-3 bg-light sidebar d-md-block">
+        <!--Menu toggle button-->
+        <button class="btn btn-outline-light menu-button position-fixed d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar_menu" aria-controls="sidebarMenu" aria-expanded="true" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>&nbsp; Projects
+        </button>
+
+        <nav class="col-md-3 bg-light sidebar d-md-block collapse" id="sidebar_menu">
             <div class="position-sticky pt-3">
                 <div class="text-center">
                     <img class="img-logo" src="assets/logo.svg">
@@ -91,17 +96,17 @@
 
                 <div class="row justify-content-center align-items-center my-4">
 
-                    <div class="col-3 text-center">
+                    <div class="col-md-3 text-center">
                         <button class="btn btn-primary btn-rounded"> <i class="fas fa-dot-circle"></i>&nbsp;Start
                             now</button>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-text"> <i class="fas fa-filter"></i></span>
                             <input type="text" class="form-control form-control-sm bg-light" placeholder="Filter...">
                         </div>
                     </div>
-                    <div class="col-3 text-center">
+                    <div class="col-md-3 text-center">
                         <button class="btn btn-success btn-rounded"> <i class="fas fa-plus-circle"></i>&nbsp;Add
                             time</button>
                     </div>

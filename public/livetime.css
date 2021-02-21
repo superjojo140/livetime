@@ -24,6 +24,7 @@
     max-width: 330px;
     padding-top: 35px;
     box-shadow: 1px 0 4px 0px rgba(0, 0, 0, .1);
+    z-index: 1;
 }
 
 .profile-pic{
@@ -112,4 +113,9 @@
     width: 100%;
 }
 
+.menu-button{
+    z-index: 150;
+    width: auto;
+    top: 5px;
+}
 
