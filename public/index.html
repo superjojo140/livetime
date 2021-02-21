@@ -24,7 +24,9 @@
     <div class="row container-fluid">
 
         <!--Menu toggle button-->
-        <button class="btn btn-outline-light menu-button position-fixed d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar_menu" aria-controls="sidebarMenu" aria-expanded="true" aria-label="Toggle navigation">
+        <button class="btn btn-sm btn-outline-light menu-button position-fixed d-md-none" type="button"
+            data-bs-toggle="collapse" data-bs-target="#sidebar_menu" aria-controls="sidebarMenu" aria-expanded="true"
+            aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>&nbsp; Projects
         </button>
 
@@ -36,8 +38,7 @@
 
                 <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 text-muted">
                     <span>Projects</span>
-                    <button class="btn btn-primary btn-rounded" data-bs-toggle="modal"
-                    data-bs-target="#projectModal">
+                    <button class="btn btn-primary btn-rounded" data-bs-toggle="modal" data-bs-target="#projectModal">
                         <i class="fas fa-plus-circle"></i> New
                     </button>
                 </h5>
@@ -69,15 +70,17 @@
             <div id="projectDetailContainer" class="main-content-inner">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-2 justify-content-end d-flex flex-column">
-                                <div>Total <h2 class="m-0">11:00</h2>
-                                </div>
+                        <div class="row d-flex flex-row-reverse">
+                            <div class="col-md-2 text-end">
+                                <button class="btn btn-lg btn-outline-light text-dark">
+                                    <i class="fa-lg fas fa-cog"></i>
+                                </button>
                             </div>
-                            <div class="col-8 text-center">
+                            <div class="col-md-8 text-center">
                                 <h2>Candy Shop</h2>
-                                <span class="text-muted">More info about the project. Yeah really a lot of
-                                    information.</span>
+                                <span class="text-muted">
+                                    More info about the project. Yeah really a lot of information.
+                                </span>
                                 <br>
                                 <div class="btn-group mt-4" role="group" aria-label="Basic example">
                                     <button type="button" class="btn btn-primary px-3">Time</button>
@@ -85,18 +88,18 @@
                                     <button type="button" class="btn btn-outline-primary px-3">Notes</button>
                                 </div>
                             </div>
-                            <div class="col-2 text-end">
-                                <button class="btn btn-outline-light text-dark"><i
-                                        class="fa-lg fas fa-cog"></i></button>
-
+                            <div class="col-md-2 justify-content-end align-items-center d-flex flex-column">
+                                <div class="mt-4">
+                                    <span class="line-height-sm">Total <strong class="text-lg">11:00</strong></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center align-items-center my-4">
-
-                    <div class="col-md-3 text-center">
+                    <!-- Add new Element button on desktop-->
+                    <div class="col-md-3 text-center d-none d-sm-none d-md-block">
                         <button class="btn btn-primary btn-rounded"> <i class="fas fa-dot-circle"></i>&nbsp;Start
                             now</button>
                     </div>
@@ -106,13 +109,23 @@
                             <input type="text" class="form-control form-control-sm bg-light" placeholder="Filter...">
                         </div>
                     </div>
-                    <div class="col-md-3 text-center">
+                    <!-- Add new Element button on desktop-->
+                    <div class="col-md-3 text-center d-none d-sm-none d-md-block">
                         <button class="btn btn-success btn-rounded"> <i class="fas fa-plus-circle"></i>&nbsp;Add
                             time</button>
                     </div>
+                    <!-- Add new Element buttons on mobile-->
+                    <div class="col-md-4 text-center d-flex d-md-none mt-3 justify-content-around">
+                        <button class="btn py-3 px-4 btn-primary btn-rounded">
+                             <i class="fas fa-dot-circle"></i>&nbsp;Start now
+                        </button>
+                        <button class="btn py-3 px-4 btn-success btn-rounded">
+                             <i class="fas fa-plus-circle"></i>&nbsp;Add time
+                        </button>
+                    </div>
                 </div>
 
-                <div class="card shadow bg-light-primary">
+                <div class="card shadow mb-3 bg-light-primary">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 d-flex align-items-center justify-content-center">
@@ -151,28 +164,63 @@
                 </div>
 
                 <div class="row d-flex justify-content-center">
-                    <div class="col-lg-2 col-md-3 text-center">
+                    <div class="col-lg-2 col-md-3  col-sm-4 col-6 text-center">
                         <span class="badge bg-info m-2 full-width">Today</span>
                     </div>
                 </div>
 
-                <div class="card shadow hover-light">
+                <div class="card shadow hover-light mb-3">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-2 d-flex align-items-center justify-content-center">
-                                <h2>2:15</h2>
+                        <div class="row flex-row-reverse">
+                           
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-12 text-end">
+                                        <span>10:00 - 12:15</span>
+                                    </div>
+                                </div>
+                                <div class="row align-items-baseline">
+                                    <div class="col-12 text-end pt-3">
+                                        <button class="btn btn-outline-primary" type="button"><i
+                                                class="fas fa-pen"></i>&nbsp;Edit</button>
+                                        <button class="btn btn-outline-danger" type="button"><i
+                                                class="fas fa-times"></i>&nbsp;Delete</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6 d-flex align-items-center">
+
+                            <div class="col-md-6 d-flex align-items-center">
                                 <div>
                                     <h4>Clean up the store</h4>
                                     <small class="">not really the best job</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <h2>2:15</h2>
+                            </div>
+                          
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow hover-light mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2 d-flex align-items-center justify-content-center">
+                                <h2>1:30</h2>
+                            </div>
+                            <div class="col-6 d-flex align-items-center">
+                                <div>
+                                    <h4>Tidy up</h4>
+                                    <small class="">also not really the best job</small>
                                 </div>
 
                             </div>
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-12 text-end">
-                                        <span>10:00 - 12:15</span>
+                                        <span>10:30 - 12:00</span>
                                     </div>
                                 </div>
                                 <div class="row align-items-baseline">
@@ -191,12 +239,12 @@
                 </div>
 
                 <div class="row d-flex justify-content-center">
-                    <div class="col-lg-2 col-md-3 text-center">
+                    <div class="col-lg-2 col-md-3  col-sm-4 col-6 text-center">
                         <span class="badge bg-info m-2 full-width">21.02.2021</span>
                     </div>
                 </div>
 
-                <div class="card shadow">
+                <div class="card shadow hover-light mb-3">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 d-flex align-items-center justify-content-center">
@@ -319,7 +367,7 @@
                             <input type="text" class="form-control" id="pm_description" placeholder="description">
                             <label>Description</label>
                         </div>
-                       
+
 
 
                     </div>

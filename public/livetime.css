@@ -27,18 +27,16 @@
     z-index: 1;
 }
 
-.profile-pic{
-    width: 150px;
-    height: 150px;
+.container-fluid{
+    padding-right: 0px;
 }
 
 .main-content{
     margin-top:60px;
-    padding: 5px 50px;
 }
 
 .main-content-inner{
-    max-width: 900px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -116,6 +114,18 @@
 .menu-button{
     z-index: 150;
     width: auto;
-    top: 5px;
+    top: 8px;
+}
+
+.text-lg{
+    font-size: xx-large;
+}
+
+.text-md{
+    font-size: 1rem;
+}
+
+.line-height-sm{
+    line-height: 0.7;
 }
 
