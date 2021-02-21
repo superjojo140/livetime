@@ -1,3 +1,8 @@
+.btn:focus,.btn:active,input:focus,input:active {
+    outline: none !important;
+    box-shadow: none !important;
+ }
+
 .no-margin {
     margin-block-start: 0;
     margin-block-end: 0;
@@ -16,8 +21,14 @@
     top: 0;
     bottom: 0;
     left: 0;
+    max-width: 330px;
     padding-top: 35px;
     box-shadow: 1px 0 4px 0px rgba(0, 0, 0, .1);
+}
+
+.profile-pic{
+    width: 150px;
+    height: 150px;
 }
 
 .main-content{
@@ -36,12 +47,65 @@
     border-radius: 10px;
 }
 
-.nav-link:hover{
+.hover-info:hover,.bg-light-info{
     background-color: #0dcaf012;
     color: #0dcaf0 !important;
+    border-color: #0dcaf0;
+}
+
+.hover-primary:hover,.bg-light-primary{
+    background-color: #0d6efd12;
+    color: #0d6efd !important;
+    border-color: #0d6efd;
+}
+
+.hover-success:hover,.bg-light-success{
+    background-color: #19875412;
+    color: #198754 !important;
+    border-color: #198754;
+}
+
+.hover-danger:hover,.bg-light-danger{
+    background-color: #dc354512;
+    color: #dc3545 !important;
+    border-color: #dc3545;
+}
+
+.hover-light:hover,.bg-light-light{
+    background-color: #f8f9fa;
+    color: #212529 !important;
 }
 
 .text-big{
     font-weight: 700;
     font-size: 14pt;
 }
+
+@keyframes breathe {
+    0% {color: #0d6dfd21;}
+    50% {color: #0d6efd;}
+    100% {color: #0d6dfd21;}
+}
+
+.live-dot{
+    animation-name: breathe;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+}
+
+.fab-container{
+    bottom: 12px;
+    right: 15px;
+}
+
+.fab-button{
+    width: 60px;
+    height: 60px;
+}
+
+.btn-outline-info:hover,.btn-info{
+    color: #f8f9fa !important;
+}
+
+

@@ -31,7 +31,7 @@
 
                 <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 text-muted">
                     <span>Projects</span>
-                    <button class="btn btn-outline-primary btn-rounded">
+                    <button class="btn btn-primary btn-rounded">
                         <i class="fas fa-plus-circle"></i> New
                     </button>
                 </h5>
@@ -40,17 +40,17 @@
 
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link link-info text-big" href="#">
+                        <a class="nav-link link-info text-big hover-info" href="#">
                             Candy Shop
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-muted" href="#">
+                        <a class="nav-link text-muted hover-info" href="#">
                             Delivery Service
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-muted" href="#">
+                        <a class="nav-link text-muted hover-info" href="#">
                             Hobby
                         </a>
                     </li>
@@ -62,128 +62,153 @@
         <div class="col-md-9 ms-sm-auto main-content">
             <div id="projectDetailContainer" class="main-content-inner">
                 <div class="card">
-                    <div class="card-body text-center">
-                        <h2>Candy Shop</h2>
+                    <div class="card-body">
                         <div class="row">
-                            <div class="col text-center">
-                                <div class="alert alert-light">
-                                    <b>Beitrag:</b>
-                                    <span>2,50 €</span>
+                            <div class="col-12 text-center">
+                                <h2>Candy Shop</h2>
+                                <span class="text-muted">More info about the project. Yeah really a lot of
+                                    information</span>
+                                <br>
+                                <div class="btn-group mt-4" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-primary px-3">Time</button>
+                                    <button type="button" class="btn btn-outline-primary px-3">Todo</button>
+                                    <button type="button" class="btn btn-outline-primary px-3">Notes</button>
                                 </div>
-                            </div>
-                            <div class="col text-center">
-                                <div class="alert alert-light">
-                                    <b>Abrechnung:</b>
-                                    <span>monthly</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col text-center">
-                                <small>
-                                    <b>Verwaltet von:</b> Johannes Schnirring
-                                </small>
-
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr>
-                <div class="card">
-                    <div class="card-header">
 
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary btn-rounded" type="button">Edit</button>
-                            <button class="btn btn-danger btn-rounded" type="button">Delete</button>
-                        </div>
-
+                <div class="row justify-content-center align-items-center my-4">
+                   
+                    <div class="col-3 text-center">
+                        <button class="btn btn-primary btn-rounded"> <i class="fas fa-dot-circle"></i>&nbsp;Start now</button>
                     </div>
-                    <div class="card-body bg-light text-dark">
+                    <div class="col-4">
+                        <div class="input-group">
+                            <span class="input-group-text"> <i class="fas fa-filter"></i></span>
+                            <input type="text" class="form-control form-control-sm bg-light" placeholder="Filter...">
+                        </div>
+                    </div>
+                    <div class="col-3 text-center">
+                        <button class="btn btn-success btn-rounded"> <i class="fas fa-plus-circle"></i>&nbsp;Add time</button>
+                    </div>
+                </div>
+
+                <div class="card shadow bg-light-primary">
+                    <div class="card-body">
                         <div class="row">
-                            <div class="col">
-                                <h2>0:45</h2>
+                            <div class="col-2 d-flex align-items-center justify-content-center">
+                                <div class="text-center">
+                                    <h2>0:45</h2>
+                                    <h6><i class="far fa-dot-circle live-dot"></i>&nbsp;Live</h6>
+                                </div>
                             </div>
-                            <div class="col">
-                                <h4>Cookies</h4>
-                                <small class="">really tasty ones</small>
+                            <div class="col-6 d-flex align-items-center">
+                                <div>
+                                    <h4>Bought Cookies</h4>
+                                    <small class="">...really tasty ones</small>
+                                </div>
+
                             </div>
-                            <div class="col">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-12 text-end">
+                                        <span>Started 13:30</span>
+                                    </div>
+                                </div>
+                                <div class="row align-items-baseline">
+                                    <div class="col-12 text-end pt-3">
+                                        <button class="btn btn-primary" type="button"><i
+                                                class="fas fa-pen"></i>&nbsp;Edit</button>
+                                        <button class="btn btn-success" type="button"><i
+                                                class="fas fa-check"></i>&nbsp;Done</button>
+                                    </div>
+                                </div>
 
 
                             </div>
                         </div>
-
-                        <br>
-
-
-
                     </div>
                 </div>
                 <br>
-                <div class="card bg-info">
-                    <div class="card-header">
-
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary btn-rounded" type="button">Edit</button>
-                            <button class="btn btn-danger btn-rounded" type="button">Delete</button>
-                        </div>
-
-                    </div>
-                    <div class="card-body bg-light text-dark">
+                <div class="card shadow hover-light">
+                    <div class="card-body">
                         <div class="row">
-                            <div class="col">
-                                <h2>0:45</h2>
+                            <div class="col-2 d-flex align-items-center justify-content-center">
+                                <h2>2:15</h2>
                             </div>
-                            <div class="col">
-                                <h4>Cookies</h4>
-                                <small class="">really tasty ones</small>
+                            <div class="col-6 d-flex align-items-center">
+                                <div>
+                                    <h4>Clean up the store</h4>
+                                    <small class="">not really the best job</small>
+                                </div>
+
                             </div>
-                            <div class="col">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-12 text-end">
+                                        <span>10:00 - 12:15</span>
+                                    </div>
+                                </div>
+                                <div class="row align-items-baseline">
+                                    <div class="col-12 text-end pt-3">
+                                        <button class="btn btn-outline-primary" type="button"><i
+                                                class="fas fa-pen"></i>&nbsp;Edit</button>
+                                        <button class="btn btn-outline-danger" type="button"><i
+                                                class="fas fa-times"></i>&nbsp;Delete</button>
+                                    </div>
+                                </div>
 
 
                             </div>
                         </div>
-
-                        <br>
-
-
-
                     </div>
                 </div>
                 <br>
-                <div class="card bg-info">
-                    <div class="card-header">
-
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary btn-rounded" type="button">Edit</button>
-                            <button class="btn btn-danger btn-rounded" type="button">Delete</button>
-                        </div>
-
-                    </div>
-                    <div class="card-body bg-light text-dark">
+                <div class="card shadow">
+                    <div class="card-body">
                         <div class="row">
-                            <div class="col">
-                                <h2>0:45</h2>
+                            <div class="col-2 d-flex align-items-center justify-content-center">
+                                <h2>8:00</h2>
                             </div>
-                            <div class="col">
-                                <h4>Cookies</h4>
-                                <small class="">really tasty ones</small>
+                            <div class="col-6 d-flex align-items-center">
+                                <div>
+                                    <h4>Store helper</h4>
+                                    <small class="">the daily thing...</small>
+                                </div>
+
                             </div>
-                            <div class="col">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-12 text-end">
+                                        <span>9:00 - 17:00</span>
+                                    </div>
+                                </div>
+                                <div class="row align-items-baseline">
+                                    <div class="col-12 text-end pt-3">
+                                        <button class="btn btn-outline-primary" type="button"><i
+                                                class="fas fa-pen"></i>&nbsp;Edit</button>
+                                        <button class="btn btn-outline-danger" type="button"><i
+                                                class="fas fa-times"></i>&nbsp;Delete</button>
+                                    </div>
+                                </div>
 
 
                             </div>
                         </div>
-
-                        <br>
-
-
-
                     </div>
                 </div>
+                <br>
+
             </div>
         </div>
+    </div>
+
+    <div class="fab-container position-fixed">
+        <button class="btn btn-primary p-3 btn-rounded shadow-lg fab-button">
+            <i class="fas fa-plus fa-lg"></i>
+        </button>
     </div>
 
 
