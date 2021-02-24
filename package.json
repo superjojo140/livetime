@@ -1,0 +1,26 @@
+{
+  "name": "livetime",
+  "version": "1.0.0",
+  "description": "Organize your projects and manage your working time",
+  "main": "src/backend/app.js",
+  "scripts": {
+    "start": "node src/backend/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superjojo140/livetime.git"
+  },
+  "author": "superjojo140",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/superjojo140/livetime/issues"
+  },
+  "homepage": "https://github.com/superjojo140/livetime#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
