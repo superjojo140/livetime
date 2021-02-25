@@ -9,11 +9,11 @@ router.put("/:projectId", updateProject)
 router.delete("/:projectId", deleteProject);
 module.exports = router;
 
-function getAllProjects(req, res, next) {
+async function getAllProjects(req, res, next) {
     try {
-        res.status(200).json({
-            message: "getAllProjects"
-        });
+        const userId = req.userData.userId;
+        let projects = await projectService.getAllProjects(userId);
+        res.status(200).json(projects);
     }
     catch (e) {
         res.status(500).json({
@@ -22,39 +22,18 @@ function getAllProjects(req, res, next) {
     }
 }
 
-function getProject(req, res, next) {
+async function getProject(req, res, next) {
     try {
-        res.status(200).json({
-            message: "getProject"
-        });
-    }
-    catch (e) {
-        res.status(500).json({
-            error: e.message
-        });
-    }
-}
+        const projectId = req.params.projectId;
+        const userId = req.userData.userId;
 
-
-function createProject(req, res, next) {
-    try {
-        res.status(200).json({
-            message: "createProject"
-        });
-    }
-    catch (e) {
-        res.status(500).json({
-            error: e.message
-        });
-    }
-}
-
-
-function updateProject(req, res, next) {
-    try {
-        res.status(200).json({
-            message: "updateProject"
-        });
+        if (await projectService.hasAccess(userId, projectId)) {
+            let projectData = await projectService.getProject(projectId);
+            res.status(200).json(projectData);
+        }
+        else {
+            throw Error("No Access")
+        }
     }
     catch (e) {
         res.status(500).json({
@@ -64,11 +43,59 @@ function updateProject(req, res, next) {
 }
 
 
-function deleteProject(req, res, next) {
+async function createProject(req, res, next) {
     try {
-        res.status(200).json({
-            message: "deleteProject"
+        const title = req.body.title;
+        const description = req.body.description;
+        const userId = req.userData.userId;
+
+        const projectId = await projectService.createProject(title, description);
+        await projectService.addAccess(userId,projectId);
+        res.status(201).json({ projectId: projectId });
+    }
+    catch (e) {
+        res.status(500).json({
+            error: e.message
         });
+    }
+}
+
+
+async function updateProject(req, res, next) {
+    try {
+        const title = req.body.title;
+        const description = req.body.description;
+        const projectId = req.params.projectId;
+        const userId = req.userData.userId;
+
+        if (await projectService.hasAccess(userId, projectId)) {
+            await projectService.updateProject(projectId,title,description);
+            res.status(204).send();
+        }
+        else {
+            throw Error("No Access")
+        }
+    }
+    catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
+    }
+}
+
+
+async function deleteProject(req, res, next) {
+    try {
+        const projectId = req.params.projectId;
+        const userId = req.userData.userId;
+
+        if (await projectService.hasAccess(userId, projectId)) {
+            await projectService.deleteProject(projectId);
+            res.status(204).send();
+        }
+        else {
+            throw Error("No Access")
+        }
     }
     catch (e) {
         res.status(500).json({

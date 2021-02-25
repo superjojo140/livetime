@@ -1,5 +1,6 @@
 //Import npm modules
 const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -8,7 +9,6 @@ const authMiddleware = require("./auth/middleware");
 const projectController = require("./project/controller");
 
 //Init app
-dotenv.config();
 const app = express();
 const port = Number(process.env.PORT);
 
