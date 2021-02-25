@@ -11,7 +11,6 @@ const projectController = require("./project/controller");
 
 //Init app
 const app = express();
-const port = Number(process.env.PORT);
 
 //Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,6 +26,7 @@ app.use(errorMiddleware.notFoundRoute);
 app.use(errorMiddleware.errorHandler);
 
 //Start server
+const port = Number(process.env.PORT);
 app.listen(port, function () {
     console.info(`LiveTime Server started and listening on http://localhost:${port}`);
 });
