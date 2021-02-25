@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 
 //Import own modules
 const authMiddleware = require("./auth/middleware");
+const errorMiddleware = require("./error/middleware");
 const projectController = require("./project/controller");
 
 //Init app
@@ -20,6 +21,10 @@ app.use(express.static('public')); //Serve static files
 
 //Register routes and controller
 app.use("/projects", projectController);
+
+//Error handler
+app.use(errorMiddleware.notFoundRoute);
+app.use(errorMiddleware.errorHandler);
 
 //Start server
 app.listen(port, function () {

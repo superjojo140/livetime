@@ -1,5 +1,6 @@
 const express = require("express");
 const projectService = require("./service");
+const errorService = require("./../error/service");
 
 const router = express.Router();
 router.get("/", getAllProjects);
@@ -15,11 +16,7 @@ async function getAllProjects(req, res, next) {
         let projects = await projectService.getAllProjects(userId);
         res.status(200).json(projects);
     }
-    catch (e) {
-        res.status(500).json({
-            error: e.message
-        });
-    }
+    catch (e) { next(e) }
 }
 
 async function getProject(req, res, next) {
@@ -31,15 +28,9 @@ async function getProject(req, res, next) {
             let projectData = await projectService.getProject(projectId);
             res.status(200).json(projectData);
         }
-        else {
-            throw Error("No Access")
-        }
+        else { throw errorService.newError("No Access or ressource not existing", 401) }
     }
-    catch (e) {
-        res.status(500).json({
-            error: e.message
-        });
-    }
+    catch (e) { next(e) }
 }
 
 
@@ -50,14 +41,10 @@ async function createProject(req, res, next) {
         const userId = req.userData.userId;
 
         const projectId = await projectService.createProject(title, description);
-        await projectService.addAccess(userId,projectId);
+        await projectService.addAccess(userId, projectId);
         res.status(201).json({ projectId: projectId });
     }
-    catch (e) {
-        res.status(500).json({
-            error: e.message
-        });
-    }
+    catch (e) { next(e) }
 }
 
 
@@ -69,18 +56,12 @@ async function updateProject(req, res, next) {
         const userId = req.userData.userId;
 
         if (await projectService.hasAccess(userId, projectId)) {
-            await projectService.updateProject(projectId,title,description);
+            await projectService.updateProject(projectId, title, description);
             res.status(204).send();
         }
-        else {
-            throw Error("No Access")
-        }
+        else { throw errorService.newError("No Access or ressource not existing", 401) }
     }
-    catch (e) {
-        res.status(500).json({
-            error: e.message
-        });
-    }
+    catch (e) { next(e) }
 }
 
 
@@ -90,16 +71,11 @@ async function deleteProject(req, res, next) {
         const userId = req.userData.userId;
 
         if (await projectService.hasAccess(userId, projectId)) {
+            await projectService.removeAccessForEveryone(projectId);
             await projectService.deleteProject(projectId);
             res.status(204).send();
         }
-        else {
-            throw Error("No Access")
-        }
+        else { throw errorService.newError("No Access or ressource not existing", 401) }
     }
-    catch (e) {
-        res.status(500).json({
-            error: e.message
-        });
-    }
+    catch (e) { next(e) }
 }

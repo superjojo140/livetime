@@ -12,6 +12,11 @@ module.exports.addAccess = async function (userId, projectId) {
     await dbService.query(queryCmd);
 }
 
+module.exports.removeAccessForEveryone = async function (projectId) {
+    const queryCmd = `DELETE FROM projects_users WHERE projectid = '${projectId}'`;
+    await dbService.query(queryCmd);
+}
+
 module.exports.getProject = async function (projectId) {
     const queryCmd = `SELECT * FROM projects WHERE id='${projectId}'`;
     let projectData = await dbService.query(queryCmd);
