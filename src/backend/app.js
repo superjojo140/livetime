@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const cookieParser = require('cookie-parser');
 
 //Import own modules
 const authMiddleware = require("./auth/middleware");
@@ -12,16 +11,13 @@ const projectController = require("./project/controller");
 
 //Init app
 const app = express();
-app.use(cookieParser());
 
-//Serve frontend
-app.get("/",authMiddleware,express.static('public/index.html'))
-app.use(express.static('public')); //Serve static files
+//Serve static files
+app.use(express.static('public'));
 
 //Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(authMiddleware); //Use Auth middleware allways
+app.use(authMiddleware); //Use Auth middleware for all  following API routes
 
 //Register routes and controller
 app.use("/projects", projectController);
