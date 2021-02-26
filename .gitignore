@@ -105,3 +105,6 @@ dist
 
 # vs code workspace variables
 .vscode
+
+# generated code
+public/livetime.js
