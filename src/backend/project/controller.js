@@ -5,7 +5,7 @@ const errorService = require("./../error/service");
 
 const router = express.Router();
 //Use timesnippetController if neccessary
-router.use("/:projectId/timesnippets",timeSnippetController);
+router.use("/:projectId/timesnippets", timeSnippetController);
 //Register own routes
 router.get("/", getAllProjects);
 router.get("/:projectId", getProject);
@@ -42,9 +42,10 @@ async function createProject(req, res, next) {
     try {
         const title = req.body.title;
         const description = req.body.description;
+        const notes = req.body.notes;
         const userId = req.userData.userId;
 
-        const projectId = await projectService.createProject(title, description);
+        const projectId = await projectService.createProject(title, description, notes);
         await projectService.addAccess(userId, projectId);
         res.status(201).json({ projectId: projectId });
     }
@@ -56,11 +57,12 @@ async function updateProject(req, res, next) {
     try {
         const title = req.body.title;
         const description = req.body.description;
+        const notes = req.body.notes;
         const projectId = req.params.projectId;
         const userId = req.userData.userId;
 
         if (await projectService.hasAccess(userId, projectId)) {
-            await projectService.updateProject(projectId, title, description);
+            await projectService.updateProject(projectId, title, description, notes);
             res.status(204).send();
         }
         else { throw errorService.newError("No Access or ressource not existing", 401) }

@@ -24,19 +24,19 @@ module.exports.getProject = async function (projectId) {
 }
 
 module.exports.getAllProjects = async function (userId) {
-    const queryCmd = `SELECT * FROM projects WHERE id IN (SELECT projectid FROM projects_users WHERE userid='${userId}')`;
+    const queryCmd = `SELECT id, title, description FROM projects WHERE id IN (SELECT projectid FROM projects_users WHERE userid='${userId}')`;
     let projectData = await dbService.query(queryCmd);
     return projectData;
 }
 
-module.exports.createProject = async function (title, description) {
-    const queryCmd = `INSERT INTO projects (title, description) VALUES ('${title}', '${description}')`;
+module.exports.createProject = async function (title, description, notes) {
+    const queryCmd = `INSERT INTO projects (title, description, notes) VALUES ('${title}', '${description}', '${notes}')`;
     const response = await dbService.query(queryCmd);
     return response.insertId;
 }
 
-module.exports.updateProject = async function (projectId, title, description) {
-    const queryCmd = `Update projects SET title = '${title}', description = '${description}' WHERE id = '${projectId}'`;
+module.exports.updateProject = async function (projectId, title, description, notes) {
+    const queryCmd = `Update projects SET title = '${title}', description = '${description}', notes = '${notes}' WHERE id = '${projectId}'`;
     await dbService.query(queryCmd);
 }
 

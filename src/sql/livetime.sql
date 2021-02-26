@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 24. Feb 2021 um 14:05
+-- Erstellungszeit: 26. Feb 2021 um 10:12
 -- Server-Version: 10.5.8-MariaDB
 -- PHP-Version: 7.4.11
 
@@ -30,16 +30,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notes` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `projects-timesnippets`
+-- Tabellenstruktur für Tabelle `projects_timesnippets`
 --
 
-CREATE TABLE `projects-timesnippets` (
+CREATE TABLE `projects_timesnippets` (
   `projectid` int(11) NOT NULL,
   `timesnippetid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -47,10 +48,10 @@ CREATE TABLE `projects-timesnippets` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `projects-users`
+-- Tabellenstruktur für Tabelle `projects_users`
 --
 
-CREATE TABLE `projects-users` (
+CREATE TABLE `projects_users` (
   `projectid` int(11) NOT NULL,
   `userid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -80,15 +81,15 @@ ALTER TABLE `projects`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `projects-timesnippets`
+-- Indizes für die Tabelle `projects_timesnippets`
 --
-ALTER TABLE `projects-timesnippets`
+ALTER TABLE `projects_timesnippets`
   ADD PRIMARY KEY (`projectid`,`timesnippetid`);
 
 --
--- Indizes für die Tabelle `projects-users`
+-- Indizes für die Tabelle `projects_users`
 --
-ALTER TABLE `projects-users`
+ALTER TABLE `projects_users`
   ADD PRIMARY KEY (`projectid`,`userid`);
 
 --
