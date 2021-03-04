@@ -1,1 +1,8 @@
-console.log("Yeah!!! tis is my port: "+process.env.PORT)
+import { ProjectApi } from "./project";
+import { TimeSnippetApi } from "./timesnippet";
+
+let projectApi = ProjectApi;
+let timeSnippetApi = TimeSnippetApi;
+
+export {projectApi,timeSnippetApi};
+
