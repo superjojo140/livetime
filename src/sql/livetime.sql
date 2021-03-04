@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 26. Feb 2021 um 10:12
--- Server-Version: 10.5.8-MariaDB
+-- Erstellungszeit: 04. Mrz 2021 um 13:39
+-- Server-Version: 10.5.9-MariaDB
 -- PHP-Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -66,8 +66,8 @@ CREATE TABLE `timesnippets` (
   `id` int(11) NOT NULL,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `start` timestamp NULL DEFAULT NULL,
-  `end` timestamp NULL DEFAULT NULL
+  `start` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ISO Datestring',
+  `end` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ISO Datestring'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
