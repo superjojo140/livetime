@@ -15,8 +15,8 @@ export class TimeSnippetApi {
             throw new Error("TimeSnippet could not be fetched.")
         }
         let timeSnippetData = await resp.json();
-        timeSnippetData.start = timestampToDate(timeSnippetData.start);
-        timeSnippetData.end = timestampToDate(timeSnippetData.end);
+        timeSnippetData.start = isoStringToDate(timeSnippetData.start);
+        timeSnippetData.end = isoStringToDate(timeSnippetData.end);
         return timeSnippetData;
     }
 
@@ -36,9 +36,9 @@ export class TimeSnippetApi {
         }
         let timeSnippetList = await resp.json();
 
-        for(let timeSnippetData of timeSnippetList){
-            timeSnippetData.start = timestampToDate(timeSnippetData.start);
-            timeSnippetData.end = timestampToDate(timeSnippetData.end);
+        for (let timeSnippetData of timeSnippetList) {
+            timeSnippetData.start = isoStringToDate(timeSnippetData.start);
+            timeSnippetData.end = isoStringToDate(timeSnippetData.end);
         }
 
         return timeSnippetList;
@@ -68,13 +68,13 @@ export class TimeSnippetApi {
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
                 'Authorization': `Bearer ${jwt}`,
-                'Content-Type' : 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 title: title,
                 description: description,
-                start: dateToTimestamp(start),
-                end: dateToTimestamp(end)
+                start: dateToIsoString(start),
+                end: dateToIsoString(end)
             })
         });
 
@@ -92,13 +92,13 @@ export class TimeSnippetApi {
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
                 'Authorization': `Bearer ${jwt}`,
-                'Content-Type' : 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 title: title,
                 description: description,
-                start: dateToTimestamp(start),
-                end: dateToTimestamp(end)
+                start: dateToIsoString(start),
+                end: dateToIsoString(end)
             })
         });
 
@@ -125,10 +125,11 @@ export interface TimeSnippet {
  * HELPERS FOR DATE CONVERSATION
  */
 
-function dateToTimestamp(date: Date): string {
+function dateToIsoString(date: Date): string {
     return date.toISOString();
 }
 
-function timestampToDate(timestamp: string): Date {
-    return new Date(timestamp);
+function isoStringToDate(isoString: string): Date {
+    if (isoString == null) { return null }
+    return new Date(isoString);
 }

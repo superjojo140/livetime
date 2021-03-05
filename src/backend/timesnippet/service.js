@@ -24,7 +24,7 @@ module.exports.getTimeSnippet = async function (timeSnippetId) {
 }
 
 module.exports.getAllTimeSnippets = async function (projectId) {
-    const queryCmd = `SELECT * FROM timesnippets WHERE id IN (SELECT timesnippetid FROM projects_timesnippets WHERE projectid='${projectId}') ORDER BY start`;
+    const queryCmd = `SELECT * FROM timesnippets WHERE id IN (SELECT timesnippetid FROM projects_timesnippets WHERE projectid='${projectId}') ORDER BY start DESC`;
     let timeSnippetData = await dbService.query(queryCmd);
     return timeSnippetData;
 }
