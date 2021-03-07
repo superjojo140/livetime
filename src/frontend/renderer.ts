@@ -1,3 +1,4 @@
+import { Project } from "./project";
 import { TimeSnippet } from "./timesnippet";
 
 /**
@@ -95,7 +96,7 @@ export function renderTimesnippet(snippet: TimeSnippet): string {
  * @param list List of timesippets to be rendered
  */
 export function renderTimesnippetList(list: TimeSnippet[]): string {
-    if (list.length < 1) { return "Empty Timesnippet list"; }
+    if (list.length < 1) { return renderMessageCard("Let's get started","No snippets in this project","Add snippets by clicking on the blue or green buttons above.","primary"); }
 
     let listHtml = "";
     let currentDay = -1;
@@ -120,7 +121,7 @@ export function renderDateLabel(date: Date): string {
     if (uniqueDayNumber(date) == uniqueDayNumber(today)) {
         text = 'Today'
     }
-    else if (uniqueDayNumber(date) == uniqueDayNumber(today)-1) {
+    else if (uniqueDayNumber(date) == uniqueDayNumber(today) - 1) {
         text = 'Yesterday'
     }
 
@@ -128,6 +129,48 @@ export function renderDateLabel(date: Date): string {
     <div class="row d-flex justify-content-center">
         <div class="col-lg-2 col-md-3  col-sm-4 col-6 text-center">
           <span class="badge bg-info m-2 full-width">${text}</span>
+        </div>
+    </div>`;
+}
+
+/**
+ * @param project the project data to be rendered
+ * @param active @default false wether this project is highlighted as active
+ */
+export function renderProjectListItem(project: Project, active?: boolean): string {
+    return `
+    <li class="nav-item">
+        <a class="nav-link hover-info ${active ? 'link-info text-big' : 'text-muted'}" href="${process.env.OWN_SERVER_URL}/?project=${project.id}" title="${project.description}">
+           ${project.title}
+        </a>
+    </li>`;
+}
+
+/**
+ * @param list projectList to be rendered
+ * @param activeId project id of the currently active project (this is rendered highlighted)
+ */
+export function renderProjectList(list: Project[],activeId:string): string {
+    let html = "";
+    for (const project of list) {
+        let active = (project.id == activeId);
+        html += renderProjectListItem(project,active);
+    }
+    return html;
+}
+
+export function renderMessageCard(heading:string,title:string,text:string,theme:string){
+    return `
+    <div class="d-flex justify-content-center align-items-center mt-5">
+        <div class="card text-white bg-${theme} mb-3" style="min-width: 60%;">
+            <div class="card-header d-flex justify-content-between">
+                <div>${heading}</div>
+                <div><i class="fas fa-exclamation-triangle"></i></div>
+            </div>
+            <div class="card-body bg-light text-dark">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text">${text}</p>
+            </div>
         </div>
     </div>`;
 }
