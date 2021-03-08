@@ -1,5 +1,6 @@
 import { Project } from "./project";
 import { TimeSnippet } from "./timesnippet";
+import { $ } from "./utils";
 
 /**
  * Renders timesnippet to html
@@ -96,7 +97,7 @@ export function renderTimesnippet(snippet: TimeSnippet): string {
  * @param list List of timesippets to be rendered
  */
 export function renderTimesnippetList(list: TimeSnippet[]): string {
-    if (list.length < 1) { return renderMessageCard("Let's get started","No snippets in this project","Add snippets by clicking on the blue or green buttons above.","primary"); }
+    if (list.length < 1) { return renderMessageCard("Let's get started", "No snippets in this project", "Add snippets by clicking on the blue or green buttons above.", "primary"); }
 
     let listHtml = "";
     let currentDay = -1;
@@ -147,19 +148,56 @@ export function renderProjectListItem(project: Project, active?: boolean): strin
 }
 
 /**
+ * Renders the project detail view
+ * @param project the project data
+ * @param millis sum of all timesnippet timespans in this project [in milliseconds]
+ */
+export function renderProjectDetails(project: Project, millis: number) {
+    return `
+    <div class="card">
+        <div class="card-body">
+            <div class="row d-flex flex-row-reverse">
+                <div class="col-md-2 text-end">
+                    <button class="btn btn-lg btn-outline-light text-dark button-project-settings" data-project-id="${project.id}">
+                        <i class="fa-lg fas fa-cog"></i>
+                    </button>
+                </div>
+                <div class="col-md-8 text-center">
+                    <h2>${project.title}</h2>
+                    <span class="text-muted">
+                        ${project.description}
+                    </span>
+                    <br>
+                    <div class="btn-group mt-4" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary px-3">Time</button>
+                        <button type="button" class="btn btn-outline-primary px-3">Todo</button>
+                        <button type="button" class="btn btn-outline-primary px-3">Notes</button>
+                    </div>
+                </div>
+                <div class="col-md-2 justify-content-end align-items-center d-flex flex-column">
+                    <div class="mt-4">
+                        <span class="line-height-sm">Total <strong class="text-xl">${formatTimespan(millis)}</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`;
+}
+
+/**
  * @param list projectList to be rendered
  * @param activeId project id of the currently active project (this is rendered highlighted)
  */
-export function renderProjectList(list: Project[],activeId:string): string {
+export function renderProjectList(list: Project[], activeId: string): string {
     let html = "";
     for (const project of list) {
         let active = (project.id == activeId);
-        html += renderProjectListItem(project,active);
+        html += renderProjectListItem(project, active);
     }
     return html;
 }
 
-export function renderMessageCard(heading:string,title:string,text:string,theme:string){
+export function renderMessageCard(heading: string, title: string, text: string, theme: string) {
     return `
     <div class="d-flex justify-content-center align-items-center mt-5">
         <div class="card text-white bg-${theme} mb-3" style="min-width: 60%;">
@@ -175,7 +213,43 @@ export function renderMessageCard(heading:string,title:string,text:string,theme:
     </div>`;
 }
 
+export function renderAddSnippetButtons() {
+    let topButtons = `
+    <!-- Add new Element button on desktop-->
+    <div class="col-md-3 text-center d-none d-md-block">
+        <button class="btn btn-primary btn-rounded"> <i class="fas fa-dot-circle"></i>&nbsp;Start
+            now</button>
+    </div>
+    <div class="col-md-4">
+        <div class="input-group">
+            <span class="input-group-text"> <i class="fas fa-filter"></i></span>
+            <input type="text" class="form-control form-control-sm bg-light" placeholder="Filter...">
+        </div>
+    </div>
+    <!-- Add new Element button on desktop-->
+    <div class="col-md-3 text-center d-none d-md-block">
+        <button class="btn btn-success btn-rounded"> <i class="fas fa-plus-circle"></i>&nbsp;Add
+            time</button>
+    </div>
+    <!-- Add new Element buttons on mobile-->
+    <div class="col-md-4 text-center d-flex d-md-none mt-3 justify-content-around">
+        <button class="btn py-3 px-4 btn-primary btn-rounded">
+            <i class="fas fa-dot-circle"></i>&nbsp;Start now
+        </button>
+        <button class="btn py-3 px-4 btn-success btn-rounded">
+            <i class="fas fa-plus-circle"></i>&nbsp;Add time
+        </button>
+    </div>`;
 
+
+
+    let faButton = `
+    <button class="btn btn-primary p-3 btn-rounded shadow-lg fab-button">
+    <i class="fas fa-plus fa-lg"></i>
+    </button>`;
+
+    return { top: topButtons, fab: faButton };
+}
 
 /**
  * Formats a given timespan to h:mm

@@ -52,62 +52,11 @@
         </nav>
 
         <div class="col-md-9 ms-sm-auto main-content">
-            <div id="projectDetailContainer" class="main-content-inner">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row d-flex flex-row-reverse">
-                            <div class="col-md-2 text-end">
-                                <button class="btn btn-lg btn-outline-light text-dark">
-                                    <i class="fa-lg fas fa-cog"></i>
-                                </button>
-                            </div>
-                            <div class="col-md-8 text-center">
-                                <h2>Candy Shop</h2>
-                                <span class="text-muted">
-                                    More info about the project. Yeah really a lot of information.
-                                </span>
-                                <br>
-                                <div class="btn-group mt-4" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-primary px-3">Time</button>
-                                    <button type="button" class="btn btn-outline-primary px-3">Todo</button>
-                                    <button type="button" class="btn btn-outline-primary px-3">Notes</button>
-                                </div>
-                            </div>
-                            <div class="col-md-2 justify-content-end align-items-center d-flex flex-column">
-                                <div class="mt-4">
-                                    <span class="line-height-sm">Total <strong class="text-xl">11:00</strong></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="main-content-inner">
+                <div id="project_detail"></div>
 
-                <div class="row justify-content-center align-items-center my-4">
-                    <!-- Add new Element button on desktop-->
-                    <div class="col-md-3 text-center d-none d-md-block">
-                        <button class="btn btn-primary btn-rounded"> <i class="fas fa-dot-circle"></i>&nbsp;Start
-                            now</button>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text"> <i class="fas fa-filter"></i></span>
-                            <input type="text" class="form-control form-control-sm bg-light" placeholder="Filter...">
-                        </div>
-                    </div>
-                    <!-- Add new Element button on desktop-->
-                    <div class="col-md-3 text-center d-none d-md-block">
-                        <button class="btn btn-success btn-rounded"> <i class="fas fa-plus-circle"></i>&nbsp;Add
-                            time</button>
-                    </div>
-                    <!-- Add new Element buttons on mobile-->
-                    <div class="col-md-4 text-center d-flex d-md-none mt-3 justify-content-around">
-                        <button class="btn py-3 px-4 btn-primary btn-rounded">
-                            <i class="fas fa-dot-circle"></i>&nbsp;Start now
-                        </button>
-                        <button class="btn py-3 px-4 btn-success btn-rounded">
-                            <i class="fas fa-plus-circle"></i>&nbsp;Add time
-                        </button>
-                    </div>
+
+                <div class="row justify-content-center align-items-center my-4" id="add_snippet_buttons">
                 </div>
 
                 <div id="timesnippet_container">
@@ -115,11 +64,11 @@
                     <div class="d-flex justify-content-center align-items-center mt-5">
                         <div class="card text-white bg-secondary mb-3" style="min-width: 60%;">
                             <div class="card-header d-flex justify-content-between">
-                                <div>Welcome back!</div>
+                                <div>One moment please...</div>
                                 <div><i class="fas fa-exclamation-triangle"></i></div>
                             </div>
                             <div class="card-body bg-light text-dark">
-                                <p class="card-text">Please select a project or create a new one.</p>
+                                <p class="card-text">We're working hard to prepare everything for you.</p>
                             </div>
                         </div>
                     </div>
@@ -130,11 +79,7 @@
         </div>
     </div>
 
-    <div class="fab-container position-fixed">
-        <button class="btn btn-primary p-3 btn-rounded shadow-lg fab-button">
-            <i class="fas fa-plus fa-lg"></i>
-        </button>
-    </div>
+    <div class="fab-container position-fixed" id="fab_container"> </div>
 
     <!--MODAL-->
     <div class="modal fade" id="timeSnippetModal" tabindex="-1">
