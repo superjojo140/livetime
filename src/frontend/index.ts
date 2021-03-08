@@ -33,7 +33,7 @@ start();
 
 
 
-let projectApi = ProjectApi;
-let timeSnippetApi = TimeSnippetApi;
-export { projectApi, timeSnippetApi };
+let pApi = ProjectApi;
+let tApi = TimeSnippetApi;
+export { pApi, tApi, state };
 

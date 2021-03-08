@@ -1,5 +1,6 @@
 import { Project } from "./project";
 import { TimeSnippet } from "./timesnippet";
+import { formatTimespan, formatTimepoint, uniqueDayNumber } from "./utils";
 
 /**
  * Renders timesnippet to html
@@ -250,32 +251,3 @@ export function renderAddSnippetButtons() {
     return { top: topButtons, fab: faButton };
 }
 
-/**
- * Formats a given timespan to h:mm
- * @param millis Timespan in milliseconds
- */
-function formatTimespan(millis: number): string {
-    let hours = Math.round(millis / (1000 * 60 * 60));
-    let hoursString = hours.toString();
-    let minutes = Math.round(millis % (1000 * 60 * 60) / (1000 * 60));
-    let minutesString = minutes < 10 ? "0" + minutes.toString() : minutes.toString();
-    return `${hoursString}:${minutesString}`;
-}
-
-/**
- * @param date Date object to format
- * @returns Timepoint formatted as hh:mm
- */
-function formatTimepoint(date: Date): string {
-    const hours = date.getHours() < 10 ? "0" + date.getHours().toString() : date.getHours().toString();
-    const minutes = date.getMinutes() < 10 ? "0" + date.getMinutes().toString() : date.getMinutes().toString();
-    return `${hours}:${minutes}`;
-}
-
-/**
- * @param date Input date
- * @returns the number of days from 01.01.1970 till the given date
- */
-function uniqueDayNumber(date: Date): number {
-    return Math.floor(date.getTime() / (1000 * 60 * 60 * 24))
-}
