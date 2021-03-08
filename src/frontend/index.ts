@@ -1,3 +1,4 @@
+import { showProject } from "./display";
 import { ProjectApi } from "./project";
 import { TimeSnippetApi } from "./timesnippet";
 import * as Utils from "./utils";
@@ -6,7 +7,7 @@ let state = new Utils.State();
 
 async function start() {
     state.projectId = Utils.getUrlParam("project");
-    Utils.showProject(state.projectId);
+    showProject(state.projectId);
 }
 
 start();

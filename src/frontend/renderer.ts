@@ -1,6 +1,5 @@
 import { Project } from "./project";
 import { TimeSnippet } from "./timesnippet";
-import { $ } from "./utils";
 
 /**
  * Renders timesnippet to html
@@ -23,8 +22,8 @@ export function renderTimesnippet(snippet: TimeSnippet): string {
     let end = formatTimepoint(snippet.end);
 
     let fromTo = isLive ? `Started: ${start}` : `${start} - ${end}`;
-    let secondButton = isLive ? `<button class="btn btn-outline-success done-button" type="button" data-snippet-id="${snippet.id}"><i
-    class="fas fa-check"></i>&nbsp;Done</button>` : `<button class="btn btn-outline-danger delete-button" type="button" data-snippet-id="${snippet.id}"><i
+    let secondButton = isLive ? `<button class="btn btn-outline-success button-done-time" type="button" data-snippet-id="${snippet.id}"><i
+    class="fas fa-check"></i>&nbsp;Done</button>` : `<button class="btn btn-outline-danger button-delete-time" type="button" data-snippet-id="${snippet.id}"><i
     class="fas fa-times"></i>&nbsp;Delete</button>`;
 
     let html = `
@@ -67,7 +66,7 @@ export function renderTimesnippet(snippet: TimeSnippet): string {
                     </div>
                     <div class="row align-items-baseline">
                         <div class="col-12 text-end pt-3">
-                            <button class="btn btn-outline-primary edit-button" type="button" data-snippet-id="${snippet.id}"><i
+                            <button class="btn btn-outline-primary button-edit-time" type="button" data-snippet-id="${snippet.id}"><i
                                     class="fas fa-pen"></i>&nbsp;Edit</button>
                             ${secondButton}
                         </div>
@@ -77,7 +76,7 @@ export function renderTimesnippet(snippet: TimeSnippet): string {
             <!-- Mobile Only -->
             <div class="row d-flex d-md-none mt-2">
                 <div class="col d-grid">
-                    <button class="btn btn-outline-primary edit-button" type="button" data-snippet-id="${snippet.id}">
+                    <button class="btn btn-outline-primary button-edit-time" type="button" data-snippet-id="${snippet.id}">
                         <i class="fas fa-pen"></i>&nbsp;Edit
                     </button>
                 </div>
@@ -158,7 +157,7 @@ export function renderProjectDetails(project: Project, millis: number) {
         <div class="card-body">
             <div class="row d-flex flex-row-reverse">
                 <div class="col-md-2 text-end">
-                    <button class="btn btn-lg btn-outline-light text-dark button-project-settings" data-project-id="${project.id}">
+                    <button class="btn btn-lg btn-outline-light text-dark button-settings-project" data-project-id="${project.id}">
                         <i class="fa-lg fas fa-cog"></i>
                     </button>
                 </div>
@@ -217,7 +216,7 @@ export function renderAddSnippetButtons() {
     let topButtons = `
     <!-- Add new Element button on desktop-->
     <div class="col-md-3 text-center d-none d-md-block">
-        <button class="btn btn-primary btn-rounded"> <i class="fas fa-dot-circle"></i>&nbsp;Start
+        <button class="btn btn-primary btn-rounded button-start-now"> <i class="fas fa-dot-circle"></i>&nbsp;Start
             now</button>
     </div>
     <div class="col-md-4">
@@ -228,15 +227,15 @@ export function renderAddSnippetButtons() {
     </div>
     <!-- Add new Element button on desktop-->
     <div class="col-md-3 text-center d-none d-md-block">
-        <button class="btn btn-success btn-rounded"> <i class="fas fa-plus-circle"></i>&nbsp;Add
+        <button class="btn btn-success btn-rounded button-add-time"> <i class="fas fa-plus-circle"></i>&nbsp;Add
             time</button>
     </div>
     <!-- Add new Element buttons on mobile-->
     <div class="col-md-4 text-center d-flex d-md-none mt-3 justify-content-around">
-        <button class="btn py-3 px-4 btn-primary btn-rounded">
+        <button class="btn py-3 px-4 btn-primary btn-rounded button-start-now">
             <i class="fas fa-dot-circle"></i>&nbsp;Start now
         </button>
-        <button class="btn py-3 px-4 btn-success btn-rounded">
+        <button class="btn py-3 px-4 btn-success btn-rounded button-add-time">
             <i class="fas fa-plus-circle"></i>&nbsp;Add time
         </button>
     </div>`;
@@ -244,7 +243,7 @@ export function renderAddSnippetButtons() {
 
 
     let faButton = `
-    <button class="btn btn-primary p-3 btn-rounded shadow-lg fab-button">
+    <button class="btn btn-primary p-3 btn-rounded shadow-lg fab-button  button-add-time">
     <i class="fas fa-plus fa-lg"></i>
     </button>`;
 
