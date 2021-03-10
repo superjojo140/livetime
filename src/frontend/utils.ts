@@ -55,12 +55,15 @@ export function registerEvent(selector, eventType, handler) {
  */
 
 /**
- * Formats a given timespan 
+ * Formats a given timespan to h:mm
  * @param millis Timespan in milliseconds
- * @param templateString Template of the expected format. e.g. "YYYY-MM-DD hh:mm:ss" or "YY-M-D h:m:s" to trim leading zeros
  */
-export function formatTimespan(millis: number, templateString: string): string {
-    return formatDate(new Date(millis), templateString);
+export function formatTimespan(millis: number): string {
+    let hours = Math.floor(millis / (1000 * 60 * 60));
+    let hoursString = hours.toString();
+    let minutes = Math.floor(millis % (1000 * 60 * 60) / (1000 * 60));
+    let minutesString = minutes < 10 ? "0" + minutes.toString() : minutes.toString();
+    return `${hoursString}:${minutesString}`;
 }
 
 /**

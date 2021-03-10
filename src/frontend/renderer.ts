@@ -17,7 +17,7 @@ export function renderTimesnippet(snippet: TimeSnippet): string {
     }
 
     let durationMillis = snippet.end.getTime() - snippet.start.getTime();
-    let duration = formatTimespan(durationMillis,'h:mm');
+    let duration = formatTimespan(durationMillis);
 
     let start = formatDate(snippet.start,'hh:mm');
     let end = formatDate(snippet.end,'hh:mm');
@@ -176,7 +176,7 @@ export function renderProjectDetails(project: Project, millis: number) {
                 </div>
                 <div class="col-md-2 justify-content-end align-items-center d-flex flex-column">
                     <div class="mt-4">
-                        <span class="line-height-sm">Total <strong class="text-xl">${formatTimespan(millis,'h:mm')}</strong></span>
+                        <span class="line-height-sm">Total <strong class="text-xl">${formatTimespan(millis)}</strong></span>
                     </div>
                 </div>
             </div>
