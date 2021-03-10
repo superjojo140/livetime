@@ -2,7 +2,7 @@ import * as Renderer from "./renderer";
 import { ProjectApi } from "./project";
 import { TimeSnippetApi } from "./timesnippet";
 import { getOverallTime,$ } from "./utils";
-import { registerButtons } from "./interaction";
+import { registerSnippetButtons, registerProjectButtons } from "./interaction";
 
 
 /**
@@ -18,6 +18,7 @@ import { registerButtons } from "./interaction";
  * - display the project details
  * - display the timesnippets of that project
  * - display the "add snippet" buttons
+ * - register events for project related buttons
  * - error handling for all theese jobs
  */
 export function showProject(projectId: string) {
@@ -35,7 +36,7 @@ export function showProject(projectId: string) {
     ])
         .then(()=>{
             showAddSnippetButtons();
-            registerButtons();
+            registerProjectButtons();
         })
         .catch((err) => {
             console.error(err);
@@ -47,6 +48,7 @@ export async function showTimesnippetList(projectId: string): Promise<void> {
     let snippetList = await TimeSnippetApi.getAll(projectId);
     let listHtml = Renderer.renderTimesnippetList(snippetList);
     $("#timesnippet_container").innerHTML = listHtml;
+    registerSnippetButtons(); //Register button events
 }
 
 export async function showProjectList(activeId: string): Promise<void> {

@@ -18,11 +18,6 @@ export function initModals(){
  * ------------------------
  */
 
-export function registerButtons() {
-    registerProjectButtons();
-    registerSnippetButtons();
-}
-
 export function registerProjectButtons() {
     registerEvent(".button-new-project", "click", function () { showProjectModal() });
     registerEvent(".button-settings-project", "click", function () { showProjectModal(this.getAttribute('data-project-id')) });
