@@ -73,7 +73,7 @@ export function formatDate(date: Date, templateString: string): string {
     const shortYear = date.getFullYear().toString().substr(2, 2);
     const month = date.getMonth() < 9 ? "0" + String(date.getMonth() + 1) : String(date.getMonth() + 1);
     const shortMonth = String(date.getMonth() + 1);
-    const day = date.getDate() < 10 ? "0" + date.getDate().toString() : date.getDate.toString();
+    const day = date.getDate() < 10 ? "0" + date.getDate().toString() : date.getDate().toString();
     const shortDay = date.getDate().toString();
     const hours = date.getHours() < 10 ? "0" + date.getHours().toString() : date.getHours().toString();
     const shortHours = date.getHours().toString();
