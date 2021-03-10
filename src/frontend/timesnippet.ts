@@ -15,8 +15,8 @@ export class TimeSnippetApi {
             throw new Error("TimeSnippet could not be fetched.")
         }
         let timeSnippetData = await resp.json();
-        timeSnippetData.start = isoStringToDate(timeSnippetData.start);
-        timeSnippetData.end = isoStringToDate(timeSnippetData.end);
+        timeSnippetData.start = timeSnippetData.start ? new Date(timeSnippetData.start) : null;
+        timeSnippetData.end = timeSnippetData.end ? new Date(timeSnippetData.end) : null;
         return timeSnippetData;
     }
 
@@ -37,8 +37,8 @@ export class TimeSnippetApi {
         let timeSnippetList = await resp.json();
 
         for (let timeSnippetData of timeSnippetList) {
-            timeSnippetData.start = isoStringToDate(timeSnippetData.start);
-            timeSnippetData.end = isoStringToDate(timeSnippetData.end);
+            timeSnippetData.start = timeSnippetData.start ? new Date(timeSnippetData.start) : null;
+            timeSnippetData.end = timeSnippetData.end ? new Date(timeSnippetData.end) : null;
         }
 
         return timeSnippetList;
@@ -73,8 +73,8 @@ export class TimeSnippetApi {
             body: JSON.stringify({
                 title: title,
                 description: description,
-                start: dateToIsoString(start),
-                end: end ? dateToIsoString(end) : null
+                start: start.toISOString(),
+                end: end ? end.toISOString() : null
             })
         });
 
@@ -97,8 +97,8 @@ export class TimeSnippetApi {
             body: JSON.stringify({
                 title: title,
                 description: description,
-                start: dateToIsoString(start),
-                end: end ? dateToIsoString(end) : null
+                start: start.toISOString(),
+                end: end ? end.toISOString() : null
             })
         });
 
@@ -119,17 +119,4 @@ export interface TimeSnippet {
     description: string;
     start: Date;
     end: Date;
-}
-
-/**
- * HELPERS FOR DATE CONVERSATION
- */
-
-function dateToIsoString(date: Date): string {
-    return date.toISOString();
-}
-
-function isoStringToDate(isoString: string): Date {
-    if (isoString == null) { return null }
-    return new Date(isoString);
 }

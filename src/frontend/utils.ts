@@ -40,7 +40,7 @@ export async function getOverallTime(projectId: string): Promise<number> {
  * @param eventType type of the event e.g. 'click'
  * @param handler Function to handle the event e.g. (event)=>{...}
  */
-export function registerEvent(selector,eventType,handler) {
+export function registerEvent(selector, eventType, handler) {
     const elements = document.querySelectorAll(selector);
 
     for (const elem of elements) {
@@ -55,35 +55,46 @@ export function registerEvent(selector,eventType,handler) {
  */
 
 /**
- * Formats a given timespan to h:mm
+ * Formats a given timespan 
  * @param millis Timespan in milliseconds
+ * @param templateString Template of the expected format. e.g. "YYYY-MM-DD hh:mm:ss" or "YY-M-D h:m:s" to trim leading zeros
  */
-export function formatTimespan(millis: number): string {
-    let hours = Math.round(millis / (1000 * 60 * 60));
-    let hoursString = hours.toString();
-    let minutes = Math.round(millis % (1000 * 60 * 60) / (1000 * 60));
-    let minutesString = minutes < 10 ? "0" + minutes.toString() : minutes.toString();
-    return `${hoursString}:${minutesString}`;
+export function formatTimespan(millis: number, templateString: string): string {
+    return formatDate(new Date(millis), templateString);
 }
 
 /**
- * @param date Date object to format
- * @returns Timepoint formatted as hh:mm
+ * Formats a date as string specified by a template string
+ * @param date Date to be formatted
+ * @param templateString Template of the expected format. e.g. "YYYY-MM-DD hh:mm:ss" or "YY-M-D h:m:s" to trim leading zeros
  */
-export function formatTimepoint(date: Date): string {
-    const hours = date.getHours() < 10 ? "0" + date.getHours().toString() : date.getHours().toString();
-    const minutes = date.getMinutes() < 10 ? "0" + date.getMinutes().toString() : date.getMinutes().toString();
-    return `${hours}:${minutes}`;
-}
-
-/**
- * @param date Date object to format
- * @returns Date formatted as yyyy-mm-dd
- */
-export function formatDate(date: Date): string {
-    const month = date.getMonth() < 9 ? "0" + String(date.getMonth() + 1) : String(date.getMonth()+1);
+export function formatDate(date: Date, templateString: string): string {
+    const year = date.getFullYear().toString();
+    const shortYear = date.getFullYear().toString().substr(2, 2);
+    const month = date.getMonth() < 9 ? "0" + String(date.getMonth() + 1) : String(date.getMonth() + 1);
+    const shortMonth = String(date.getMonth() + 1);
     const day = date.getDate() < 10 ? "0" + date.getDate().toString() : date.getDate.toString();
-    return `${date.getFullYear()}-${month}-${day}`;
+    const shortDay = date.getDate().toString();
+    const hours = date.getHours() < 10 ? "0" + date.getHours().toString() : date.getHours().toString();
+    const shortHours = date.getHours().toString();
+    const minutes = date.getMinutes() < 10 ? "0" + date.getMinutes().toString() : date.getMinutes().toString();
+    const shortMinutes = date.getMinutes().toString();
+    const seconds = date.getSeconds() < 10 ? "0" + date.getSeconds().toString() : date.getSeconds().toString();
+    const shortSeconds = date.getSeconds().toString();
+
+    return templateString
+        .replace('YYYY', year)
+        .replace('YY', shortYear)
+        .replace('MM', month)
+        .replace('M', shortMonth)
+        .replace('DD', day)
+        .replace('D', shortDay)
+        .replace('hh', hours)
+        .replace('h', shortHours)
+        .replace('mm', minutes)
+        .replace('m', shortMinutes)
+        .replace('ss', seconds)
+        .replace('s', shortSeconds)
 }
 
 /**

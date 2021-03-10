@@ -1,5 +1,5 @@
 import { TimeSnippetApi } from "./timesnippet";
-import { $, formatDate, formatTimepoint, registerEvent } from "./utils";
+import { $, formatDate, registerEvent } from "./utils";
 import { state } from "./index";
 import { showTimesnippetList } from "./display";
 import * as bootstrap from "bootstrap"
@@ -67,9 +67,9 @@ export async function showSnippetModal(snippetId?: string) {
         idInput.value = snippet.id;
         titleInput.value = snippet.title;
         descriptionInput.value = snippet.description;
-        dateInput.value = formatDate(snippet.start);
-        startInput.value = formatTimepoint(snippet.start);
-        endInput.value = snippet.end ? formatTimepoint(snippet.end) : "";
+        dateInput.value = formatDate(snippet.start,'YYYY-MM-DD');
+        startInput.value = formatDate(snippet.start,'hh:mm');
+        endInput.value = snippet.end ? formatDate(snippet.end,'hh:mm') : "";
     }
     else {
         heading.innerHTML = "Create new Time Snippet";
@@ -78,8 +78,8 @@ export async function showSnippetModal(snippetId?: string) {
         idInput.value = CREATE_ID;
         titleInput.value = "";
         descriptionInput.value = "";
-        dateInput.value = formatDate(new Date());
-        startInput.value = formatTimepoint(new Date());
+        dateInput.value = formatDate(new Date(),'YYYY-MM-DD');
+        startInput.value = formatDate(new Date(),'hh:mm');
         endInput.value = "";
     }
 

@@ -1,6 +1,6 @@
 import { Project } from "./project";
 import { TimeSnippet } from "./timesnippet";
-import { formatTimespan, formatTimepoint, uniqueDayNumber } from "./utils";
+import { formatDate, formatTimespan, uniqueDayNumber } from "./utils";
 
 /**
  * Renders timesnippet to html
@@ -17,10 +17,10 @@ export function renderTimesnippet(snippet: TimeSnippet): string {
     }
 
     let durationMillis = snippet.end.getTime() - snippet.start.getTime();
-    let duration = formatTimespan(durationMillis);
+    let duration = formatTimespan(durationMillis,'h:mm');
 
-    let start = formatTimepoint(snippet.start);
-    let end = formatTimepoint(snippet.end);
+    let start = formatDate(snippet.start,'hh:mm');
+    let end = formatDate(snippet.end,'hh:mm');
 
     let fromTo = isLive ? `Started: ${start}` : `${start} - ${end}`;
     let secondButton = isLive ? `<button class="btn btn-outline-success button-done-time" type="button" data-snippet-id="${snippet.id}"><i
@@ -176,7 +176,7 @@ export function renderProjectDetails(project: Project, millis: number) {
                 </div>
                 <div class="col-md-2 justify-content-end align-items-center d-flex flex-column">
                     <div class="mt-4">
-                        <span class="line-height-sm">Total <strong class="text-xl">${formatTimespan(millis)}</strong></span>
+                        <span class="line-height-sm">Total <strong class="text-xl">${formatTimespan(millis,'h:mm')}</strong></span>
                     </div>
                 </div>
             </div>
