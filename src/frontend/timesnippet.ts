@@ -74,7 +74,7 @@ export class TimeSnippetApi {
                 title: title,
                 description: description,
                 start: dateToIsoString(start),
-                end: dateToIsoString(end)
+                end: end ? dateToIsoString(end) : null
             })
         });
 
@@ -98,7 +98,7 @@ export class TimeSnippetApi {
                 title: title,
                 description: description,
                 start: dateToIsoString(start),
-                end: dateToIsoString(end)
+                end: end ? dateToIsoString(end) : null
             })
         });
 

@@ -102,7 +102,7 @@ export async function saveSnippet() {
         let startInput = $("#tsm_start") as HTMLInputElement;
         let start = new Date(`${dateInput.value} ${startInput.value}`);
         let endInput = $("#tsm_end") as HTMLInputElement;
-        let end = new Date(`${dateInput.value} ${endInput.value}`);
+        let end = endInput.value == "" ? null : new Date(`${dateInput.value} ${endInput.value}`);
 
         if (idInput.value == CREATE_ID) {
             //create new Snippet

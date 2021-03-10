@@ -30,13 +30,15 @@ module.exports.getAllTimeSnippets = async function (projectId) {
 }
 
 module.exports.createTimeSnippet = async function (title, description, start, end) {
-    const queryCmd = `INSERT INTO timesnippets (title, description, start, end) VALUES ('${title}', '${description}', '${start}', '${end}')`;
+    const endValue = (end == null) ? `NULL` : `'${end}'`; //Special case for null
+    const queryCmd = `INSERT INTO timesnippets (title, description, start, end) VALUES ('${title}', '${description}', '${start}', ${endValue})`;
     const response = await dbService.query(queryCmd);
     return response.insertId;
 }
 
 module.exports.updateTimeSnippet = async function (timeSnippetId, title, description, start, end) {
-    const queryCmd = `Update timesnippets SET title = '${title}', description = '${description}' , start = '${start}', end = '${end}' WHERE id = '${timeSnippetId}'`;
+    const endValue = (end == null) ? `NULL` : `'${end}'`; //Special case for null
+    const queryCmd = `Update timesnippets SET title = '${title}', description = '${description}' , start = '${start}', end = ${endValue} WHERE id = '${timeSnippetId}'`;
     await dbService.query(queryCmd);
 }
 
