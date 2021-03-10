@@ -2,11 +2,14 @@ import { TimeSnippetApi } from "./timesnippet";
 import { $, formatDate, formatTimepoint, registerEvent } from "./utils";
 import { state } from "./index";
 import { showTimesnippetList } from "./display";
+import * as bootstrap from "bootstrap"
 
 const CREATE_ID = "create";
+let timesnippetModal:bootstrap.Modal, projectModal:bootstrap.Modal;
 
 export function initModals(){
-    //TODO Init modals
+    timesnippetModal = new bootstrap.Modal($('#time_snippet_modal'));
+    projectModal = new bootstrap.Modal($('#project_modal'));
 }
 
 /**
@@ -87,7 +90,7 @@ export async function showSnippetModal(snippetId?: string) {
 
     saveButton.onclick = saveSnippet;
 
-    //TODO Show Modal...
+    timesnippetModal.show();
 }
 
 export function createLiveSnippet() {
@@ -115,7 +118,8 @@ export async function saveSnippet() {
             await TimeSnippetApi.update(state.projectId, idInput.value, titleInput.value, descriptionInput.value, start, end);
         }
         await showTimesnippetList(state.projectId); //refresh TimesnippetList
-        //TODO Close Modal, show success
+        timesnippetModal.hide();
+        //TODO show success
     }
     catch (err) {
         console.error(err);

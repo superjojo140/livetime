@@ -4,8 +4,11 @@ const Dotenv = require('dotenv-webpack');
 module.exports = {
   entry: './src/frontend/index.ts',
   devtool: 'inline-source-map',
-  mode: "production",
+  mode: 'production',
   watch: false,
+  externals: {
+    'bootstrap': 'bootstrap',
+  },
   module: {
     rules: [
       {
