@@ -79,7 +79,21 @@
         </div>
     </div>
 
+    <!-- FAB Container -->
     <div class="fab-container position-fixed" id="fab_container"> </div>
+
+    <!-- Toasts Container -->
+    <div class="toast-container start-50 translate-middle-x position-fixed align-items-center">
+        <div class="toast text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <div id="toast_header" class="h6"></div>
+                    <div id="toast_body"></div>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
 
     <!--MODAL-->
     <div class="modal fade" id="time_snippet_modal" tabindex="-1">

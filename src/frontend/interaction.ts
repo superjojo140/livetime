@@ -5,11 +5,14 @@ import { showTimesnippetList } from "./display";
 import * as bootstrap from "bootstrap"
 
 const CREATE_ID = "create";
-let timesnippetModal: bootstrap.Modal, projectModal: bootstrap.Modal;
+let timesnippetModal: bootstrap.Modal;
+let projectModal: bootstrap.Modal;
+let toast: bootstrap.Toast;
 
-export function initModals() {
+export function initBootstrapElements() {
     timesnippetModal = new bootstrap.Modal($('#time_snippet_modal'));
     projectModal = new bootstrap.Modal($('#project_modal'));
+    toast = new bootstrap.Toast($("#toast"))
 }
 
 /**
@@ -21,7 +24,7 @@ export function initModals() {
 export function registerStaticButtons() {
     registerEvent(".button-new-project", "click", function () { showProjectModal() });
     registerEvent(".button-settings-project", "click", function () { showProjectModal(this.getAttribute('data-project-id')) });
-    
+
     registerEvent(".button-start-now", "click", function () { createLiveSnippet() });
     registerEvent(".button-add-time", "click", function () { showSnippetModal() });
     registerEvent("#tsm_form", "submit", (event) => { saveSnippet(); event.preventDefault(); });
@@ -89,6 +92,7 @@ export async function showSnippetModal(snippetId?: string) {
 export async function createLiveSnippet() {
     await TimeSnippetApi.create(state.projectId, "Live Snippet", "", new Date(), null);
     await showTimesnippetList(state.projectId); //refresh TimesnippetList
+    showToast("Start now!", "Your live snippet was created", "success");
 }
 
 export async function saveSnippet() {
@@ -113,11 +117,11 @@ export async function saveSnippet() {
 
         await showTimesnippetList(state.projectId); //refresh TimesnippetList
         timesnippetModal.hide();
-        //TODO show success
+        showToast("Saved", "Your changes were saved", "success");
     }
     catch (err) {
         console.error(err);
-        //TODO Process Error, show error
+        showToast("Can't save", err.message, "danger");
     }
 }
 
@@ -126,6 +130,7 @@ export async function doneSnippet(snippetId: string) {
     snippet.end = new Date();
     await TimeSnippetApi.update(state.projectId, snippet.id, snippet.title, snippet.description, snippet.start, snippet.end);
     await showTimesnippetList(state.projectId); //refresh TimesnippetList
+    showToast("All right", "Your snippet is marked as done", "success");
 }
 
 export async function deleteSnippet(snippetId: string) {
@@ -133,5 +138,13 @@ export async function deleteSnippet(snippetId: string) {
         await TimeSnippetApi.delete(state.projectId, snippetId);
         await showTimesnippetList(state.projectId); //refresh TimesnippetList
         timesnippetModal.hide(); //if delete was triggered form modal...
+        showToast("Bye Bye", "Your snippet was deleted", "success");
     }
+}
+
+export function showToast(title: string, text: string, theme: string) {
+    $("#toast_header").innerHTML = title;
+    $("#toast_body").innerHTML = text;
+    $("#toast").className = `toast text-white bg-${theme}`;
+    toast.show();
 }
