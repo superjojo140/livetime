@@ -1,4 +1,4 @@
-import { TimeSnippetApi } from "./timesnippet";
+import { TimeSnippet, TimeSnippetApi } from "./timesnippet";
 
 /**
  * --------------
@@ -20,15 +20,15 @@ export function getUrlParam(key: string) {
 }
 
 /**
- * Calculates the overall sum of all timesnippets in the project identified by the given projectId
- * @return
+ * Calculates the overall sum of all timesnippets in the given snippet list
+ * Live Snippets are handled as if their end time is now
+ * @return the overall time in milliseconds
  */
-export async function getOverallTime(projectId: string): Promise<number> {
-    let snippetList = await TimeSnippetApi.getAll(projectId);
+export function getOverallTime(snippetList: TimeSnippet[]): number {
     let sum = 0;
 
     for (const snippet of snippetList) {
-        if (snippet.end == null) { snippet.end = new Date(); } //Set current timepoint as temporary end for live snippets
+        let end =  (snippet.end == null) ? new Date() : snippet.end //Set current timepoint as temporary end for live snippets
         sum += snippet.end.getTime() - snippet.start.getTime();
     }
     return sum;

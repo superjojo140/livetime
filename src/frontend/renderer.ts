@@ -150,9 +150,8 @@ export function renderProjectListItem(project: Project, active?: boolean): strin
 /**
  * Renders the project detail view
  * @param project the project data
- * @param millis sum of all timesnippet timespans in this project [in milliseconds]
  */
-export function renderProjectDetails(project: Project, millis: number) {
+export function renderProjectDetails(project: Project) {
     return `
     <div class="card">
         <div class="card-body">
@@ -176,7 +175,7 @@ export function renderProjectDetails(project: Project, millis: number) {
                 </div>
                 <div class="col-md-2 justify-content-end align-items-center d-flex flex-column">
                     <div class="mt-4">
-                        <span class="line-height-sm">Total <strong class="text-xl">${formatTimespan(millis)}</strong></span>
+                        <span class="line-height-sm">Total <strong class="text-xl" id="overall_sum">-</strong></span>
                     </div>
                 </div>
             </div>

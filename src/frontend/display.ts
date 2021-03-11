@@ -1,7 +1,7 @@
 import * as Renderer from "./renderer";
 import { ProjectApi } from "./project";
-import { TimeSnippetApi } from "./timesnippet";
-import { getOverallTime,$ } from "./utils";
+import { TimeSnippet, TimeSnippetApi } from "./timesnippet";
+import { getOverallTime, $, formatTimespan } from "./utils";
 import { registerSnippetButtons, registerStaticButtons } from "./interaction";
 
 
@@ -21,7 +21,7 @@ import { registerSnippetButtons, registerStaticButtons } from "./interaction";
  * - register events for project related buttons
  * - error handling for all theese jobs
  */
-export function showProject(projectId: string) {
+export async function showProject(projectId: string) {
     showProjectList(projectId).catch((err) => {
         console.error(err);
         showMessageCard("Whoops...", "Something went really wrong!", "We can't load your project list. Please log out, refresh this page and log in again", "danger");
@@ -30,24 +30,24 @@ export function showProject(projectId: string) {
         showMessageCard("Welcome back!", "", "Please select a project or create a new one.", "secondary");
         return;
     }
-    Promise.all([
-        showTimesnippetList(projectId),
-        showProjectDetails(projectId),
-    ])
-        .then(()=>{
-            showAddSnippetButtons();
-            registerStaticButtons();
-        })
-        .catch((err) => {
-            console.error(err);
-            showMessageCard("Whoops...", "Project not found", "Maybe it does not exist or you don't have access to it.", "danger");
-        })
+
+    try {
+        await showProjectDetails(projectId);
+        await showTimesnippetList(projectId);
+        showAddSnippetButtons();
+        registerStaticButtons();
+    }
+    catch (err) {
+        console.error(err);
+        showMessageCard("Whoops...", "Project not found", "Maybe it does not exist or you don't have access to it.", "danger");
+    }
 }
 
 export async function showTimesnippetList(projectId: string): Promise<void> {
     let snippetList = await TimeSnippetApi.getAll(projectId);
     let listHtml = Renderer.renderTimesnippetList(snippetList);
     $("#timesnippet_container").innerHTML = listHtml;
+    showOverallTime(snippetList);
     registerSnippetButtons(); //Register button events
 }
 
@@ -64,9 +64,16 @@ export function showMessageCard(heading: string, title: string, text: string, th
 
 export async function showProjectDetails(projectId: string) {
     let project = await ProjectApi.get(projectId);
-    let sum = await getOverallTime(projectId);
-    let html = Renderer.renderProjectDetails(project, sum);
+    let html = Renderer.renderProjectDetails(project);
     $("#project_detail").innerHTML = html;
+}
+
+/**
+ * Updates the time sum in the project overview area
+ */
+export function showOverallTime(snippetList: TimeSnippet[]) {
+    const millis = getOverallTime(snippetList);
+    $("#overall_sum").innerHTML = formatTimespan(millis);
 }
 
 export function showAddSnippetButtons() {
