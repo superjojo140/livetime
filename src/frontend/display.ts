@@ -2,7 +2,7 @@ import * as Renderer from "./renderer";
 import { ProjectApi } from "./project";
 import { TimeSnippetApi } from "./timesnippet";
 import { getOverallTime,$ } from "./utils";
-import { registerSnippetButtons, registerProjectButtons } from "./interaction";
+import { registerSnippetButtons, registerStaticButtons } from "./interaction";
 
 
 /**
@@ -36,7 +36,7 @@ export function showProject(projectId: string) {
     ])
         .then(()=>{
             showAddSnippetButtons();
-            registerProjectButtons();
+            registerStaticButtons();
         })
         .catch((err) => {
             console.error(err);

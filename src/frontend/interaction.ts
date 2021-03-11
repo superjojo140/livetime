@@ -18,18 +18,19 @@ export function initModals() {
  * ------------------------
  */
 
-export function registerProjectButtons() {
+export function registerStaticButtons() {
     registerEvent(".button-new-project", "click", function () { showProjectModal() });
     registerEvent(".button-settings-project", "click", function () { showProjectModal(this.getAttribute('data-project-id')) });
+    
     registerEvent(".button-start-now", "click", function () { createLiveSnippet() });
     registerEvent(".button-add-time", "click", function () { showSnippetModal() });
+    registerEvent("#tsm_form", "submit", (event) => { saveSnippet(); event.preventDefault(); });
 }
 
 export function registerSnippetButtons() {
     registerEvent(".button-done-time", "click", function () { doneSnippet(this.getAttribute('data-snippet-id')) });
     registerEvent(".button-edit-time", "click", function () { showSnippetModal(this.getAttribute('data-snippet-id')) });
     registerEvent(".button-delete-time", "click", function () { deleteSnippet(this.getAttribute('data-snippet-id')) });
-
 }
 
 /**
@@ -55,7 +56,6 @@ export async function showSnippetModal(snippetId?: string) {
     let endInput = $("#tsm_end") as HTMLInputElement;
 
     let deleteButton = $(".button-delete-tsm");
-    let saveButton = $(".button-save-tsm");
 
     if (projectExists) {
         let snippet = await TimeSnippetApi.get(state.projectId, snippetId);
@@ -82,8 +82,6 @@ export async function showSnippetModal(snippetId?: string) {
         startInput.value = formatDate(new Date(), 'hh:mm');
         endInput.value = "";
     }
-
-    saveButton.onclick = saveSnippet;
 
     timesnippetModal.show();
 }
