@@ -7,11 +7,13 @@ import * as bootstrap from "bootstrap"
 const CREATE_ID = "create";
 let timesnippetModal: bootstrap.Modal;
 let projectModal: bootstrap.Modal;
+let confirmModal: bootstrap.Modal;
 let toast: bootstrap.Toast;
 
 export function initBootstrapElements() {
     timesnippetModal = new bootstrap.Modal($('#time_snippet_modal'));
     projectModal = new bootstrap.Modal($('#project_modal'));
+    confirmModal = new bootstrap.Modal($('#confirm_modal'));
     toast = new bootstrap.Toast($("#toast"))
 }
 
@@ -92,7 +94,7 @@ export async function showSnippetModal(snippetId?: string) {
 export async function createLiveSnippet() {
     await TimeSnippetApi.create(state.projectId, "Live Snippet", "", new Date(), null);
     await showTimesnippetList(state.projectId); //refresh TimesnippetList
-    showToast("Start now!", "Your live snippet was created", "success");
+    //showToast("Start now!", "Your live snippet was created", "success");
 }
 
 export async function saveSnippet() {
@@ -117,7 +119,7 @@ export async function saveSnippet() {
 
         await showTimesnippetList(state.projectId); //refresh TimesnippetList
         timesnippetModal.hide();
-        showToast("Saved", "Your changes were saved", "success");
+        //showToast("Saved", "Your changes were saved", "success");
     }
     catch (err) {
         console.error(err);
@@ -130,16 +132,16 @@ export async function doneSnippet(snippetId: string) {
     snippet.end = new Date();
     await TimeSnippetApi.update(state.projectId, snippet.id, snippet.title, snippet.description, snippet.start, snippet.end);
     await showTimesnippetList(state.projectId); //refresh TimesnippetList
-    showToast("All right", "Your snippet is marked as done", "success");
+    //showToast("All right", "Your snippet is marked as done", "success");
 }
 
 export async function deleteSnippet(snippetId: string) {
-    if (confirm("Wirklich löschen?")) {
+    prettyConfirm("Do you really want to delete this snippet?").then(async ()=>{
         await TimeSnippetApi.delete(state.projectId, snippetId);
         await showTimesnippetList(state.projectId); //refresh TimesnippetList
         timesnippetModal.hide(); //if delete was triggered form modal...
-        showToast("Bye Bye", "Your snippet was deleted", "success");
-    }
+        //showToast("Bye Bye", "Your snippet was deleted", "success");        
+    }).catch(()=>{});
 }
 
 export function showToast(title: string, text: string, theme: string) {
@@ -148,3 +150,17 @@ export function showToast(title: string, text: string, theme: string) {
     $("#toast").className = `toast text-white bg-${theme}`;
     toast.show();
 }
+
+export function prettyConfirm(text: string): Promise<void>{
+    return new Promise(function (resolve, reject) {
+        $("#confirm_modal_body").innerHTML = text;
+        $("#confirm_modal_yes").onclick = ()=>{confirmModal.hide(); resolve()};
+        $("#confirm_modal_yes").innerHTML = yesVariants[Math.floor(Math.random()*(yesVariants.length-1))]
+        $("#confirm_modal_no").onclick = ()=>{confirmModal.hide(); reject()};
+        $("#confirm_modal_no").innerHTML = noVariants[Math.floor(Math.random()*(noVariants.length-1))]
+        confirmModal.show();
+    });
+}
+
+const yesVariants = ["Yes of course","Yupp","Yes Sir","Yes mum","Do it!","Why not...","Yeah man","Yes"];
+const noVariants = ["Never","Nope","Not really","No no no","Nooooooo","Better not","Uhhh... no!","No"];
