@@ -216,7 +216,7 @@ export function renderAddSnippetButtons() {
     let topButtons = `
     <!-- Add new Element button on desktop-->
     <div class="col-md-3 text-center d-none d-md-block">
-        <button class="btn btn-primary btn-rounded button-start-now"> <i class="fas fa-dot-circle"></i>&nbsp;Start
+        <button class="btn btn-primary btn-rounded button-live-snippet"> <i class="fas fa-dot-circle"></i>&nbsp;Start
             now</button>
     </div>
     <div class="col-md-4">
@@ -232,7 +232,7 @@ export function renderAddSnippetButtons() {
     </div>
     <!-- Add new Element buttons on mobile-->
     <div class="col-md-4 text-center d-flex d-md-none mt-3 justify-content-around">
-        <button class="btn py-3 px-4 btn-primary btn-rounded button-start-now">
+        <button class="btn py-3 px-4 btn-primary btn-rounded button-live-snippet">
             <i class="fas fa-dot-circle"></i>&nbsp;Start now
         </button>
         <button class="btn py-3 px-4 btn-success btn-rounded button-add-time">

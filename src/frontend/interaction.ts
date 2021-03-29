@@ -28,10 +28,17 @@ export function registerStaticButtons() {
     registerEvent(".button-new-project", "click", function () { showProjectModal() });
     registerEvent(".button-settings-project", "click", function () { showProjectModal(this.getAttribute('data-project-id')) });
 
-    registerEvent(".button-start-now", "click", function () { createLiveSnippet() });
+    registerEvent(".button-live-snippet", "click", function () { createLiveSnippet() });
     registerEvent(".button-add-time", "click", function () { showSnippetModal() });
     registerEvent("#tsm_form", "submit", (event) => { saveSnippet(); event.preventDefault(); });
     registerEvent("#pm_form", "submit", (event) => { saveProject(); event.preventDefault(); });
+
+
+    registerEvent(".button-pretty-start", "click", helperPrettyStart);
+    registerEvent(".button-start-now", "click", helperStartNow);
+    registerEvent(".button-pretty-end", "click", helperPrettyEnd);
+    registerEvent(".button-end-now", "click", helperEndNow);
+    registerEvent(".button-time-preset", "click", helperTimePreset);
 }
 
 export function registerSnippetButtons() {
@@ -106,12 +113,12 @@ export async function saveProject() {
 
 
 export async function deleteProject(projectId: string) {
-    prettyConfirm("Do you really want to delete this project?").then(async ()=>{
+    prettyConfirm("Do you really want to delete this project?").then(async () => {
         await ProjectApi.delete(projectId);
         projectModal.hide(); //if delete was triggered form modal...
         window.location.href = `${process.env.OWN_SERVER_URL}/`
         //showToast("Bye Bye", "Your project was deleted", "success");        
-    }).catch(()=>{});
+    }).catch(() => { });
 }
 
 
@@ -202,12 +209,12 @@ export async function doneSnippet(snippetId: string) {
 }
 
 export async function deleteSnippet(snippetId: string) {
-    prettyConfirm("Do you really want to delete this snippet?").then(async ()=>{
+    prettyConfirm("Do you really want to delete this snippet?").then(async () => {
         await TimeSnippetApi.delete(state.projectId, snippetId);
         await showTimesnippetList(state.projectId); //refresh TimesnippetList
         timesnippetModal.hide(); //if delete was triggered form modal...
         //showToast("Bye Bye", "Your snippet was deleted", "success");        
-    }).catch(()=>{});
+    }).catch(() => { });
 }
 
 export function showToast(title: string, text: string, theme: string) {
@@ -217,16 +224,100 @@ export function showToast(title: string, text: string, theme: string) {
     toast.show();
 }
 
-export function prettyConfirm(text: string): Promise<void>{
+export function prettyConfirm(text: string): Promise<void> {
     return new Promise(function (resolve, reject) {
         $("#confirm_modal_body").innerHTML = text;
-        $("#confirm_modal_yes").onclick = ()=>{confirmModal.hide(); resolve()};
-        $("#confirm_modal_yes").innerHTML = yesVariants[Math.floor(Math.random()*(yesVariants.length-1))]
-        $("#confirm_modal_no").onclick = ()=>{confirmModal.hide(); reject()};
-        $("#confirm_modal_no").innerHTML = noVariants[Math.floor(Math.random()*(noVariants.length-1))]
+        $("#confirm_modal_yes").onclick = () => { confirmModal.hide(); resolve() };
+        $("#confirm_modal_yes").innerHTML = yesVariants[Math.floor(Math.random() * (yesVariants.length - 1))]
+        $("#confirm_modal_no").onclick = () => { confirmModal.hide(); reject() };
+        $("#confirm_modal_no").innerHTML = noVariants[Math.floor(Math.random() * (noVariants.length - 1))]
         confirmModal.show();
     });
 }
 
-const yesVariants = ["Yes of course","Yupp","Yes Sir","Yes mum","Do it!","Why not...","Yeah man","Yes"];
-const noVariants = ["Never","Nope","Not really","No no no","Nooooooo","Better not","Uhhh... no!","No"];
+const yesVariants = ["Yes of course", "Yupp", "Yes Sir", "Yes mum", "Do it!", "Why not...", "Yeah man", "Yes"];
+const noVariants = ["Never", "Nope", "Not really", "No no no", "Nooooooo", "Better not", "Uhhh... no!", "No"];
+
+/**
+ * ----------------------------------
+ * ------- Input Helper -------------
+ * ----------------------------------
+ */
+
+function helperPrettyStart() {
+    let startInput = $("#tsm_start") as HTMLInputElement;
+    let dateInput = $("#tsm_date") as HTMLInputElement;
+    let time = helperRoundTime(new Date(`${dateInput.value} ${startInput.value}`));
+    startInput.value = formatDate((time), "hh:mm");
+}
+
+function helperPrettyEnd() {
+    let endInput = $("#tsm_end") as HTMLInputElement;
+    let dateInput = $("#tsm_date") as HTMLInputElement;
+    let time = helperRoundTime(new Date(`${dateInput.value} ${endInput.value}`));
+    endInput.value = formatDate((time), "hh:mm");
+}
+
+/**
+ * Sets a given date to a rounded time.
+ * That means rounded to full quarter hours with a tendency to floor
+ * @example 11:03 -> 11:00
+ * @example 11:10 -> 11:00
+ * @example 11:11 -> 11:15
+ * @example 11:00 -> 11:00
+ * @param date Date to round
+ */
+function helperRoundTime(date: Date) {
+    let minutes = date.getMinutes();
+    let hours = date.getHours();
+    if (minutes <= 10) { date.setMinutes(0, 0, 0) }
+    else if (minutes <= 25) { date.setMinutes(15, 0, 0) }
+    else if (minutes <= 40) { date.setMinutes(30, 0, 0) }
+    else if (minutes <= 55) { date.setMinutes(45, 0, 0) }
+    else { date.setHours(hours + 1, 0, 0, 0) }
+    return date;
+}
+
+function helperEndNow() {
+    let endInput = $("#tsm_end") as HTMLInputElement;
+    endInput.value = formatDate(new Date(), "hh:mm");
+    let startInput = $("#tsm_start") as HTMLInputElement;
+    startInput.value = "";
+}
+
+function helperStartNow() {
+    let endInput = $("#tsm_end") as HTMLInputElement;
+    let startInput = $("#tsm_start") as HTMLInputElement;
+    startInput.value = formatDate(new Date(), "hh:mm");
+    endInput.value = "";
+}
+
+/**
+ * Set the start or end input in a way that the difference is the given timespan
+ * start unset, end unset -> set start to now, end to timespan
+ * start unset, end set -> set start to timespan
+ * start set, end unset -> set end to timespan
+ * start set, end set -> keep start, set end to timespan
+ */
+function helperTimePreset() {
+    let minutes = this.getAttribute('data-time');
+    let millis = minutes * 60 * 1000;
+    let endInput = $("#tsm_end") as HTMLInputElement;
+    let startInput = $("#tsm_start") as HTMLInputElement;
+    let dateInput = $("#tsm_date") as HTMLInputElement;
+
+    if (startInput.value == "" && endInput.value != "") {
+        //set start value
+        let end = new Date(`${dateInput.value} ${endInput.value}`);
+        let start = new Date(end.getTime() - millis);
+        startInput.value = formatDate(start, "hh:mm");
+    } else {
+        //set end value
+        if (startInput.value == "") {
+            helperStartNow();
+        }
+        let start = new Date(`${dateInput.value} ${startInput.value}`);
+        let end = new Date(start.getTime() + millis);
+        endInput.value = formatDate(end, "hh:mm");
+    }
+}
