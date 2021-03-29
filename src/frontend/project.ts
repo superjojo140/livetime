@@ -59,7 +59,8 @@ export class ProjectApi {
             method: 'PUT',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                'Authorization': `Bearer ${jwt}`
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 title: title,
@@ -81,7 +82,8 @@ export class ProjectApi {
             method: 'POST',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                'Authorization': `Bearer ${jwt}`
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 title: title,

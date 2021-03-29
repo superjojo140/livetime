@@ -143,4 +143,5 @@
 
 .toast-container{
     bottom: 15px;
+    z-index: 1060;
 }

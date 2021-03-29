@@ -1,8 +1,9 @@
 import { TimeSnippetApi } from "./timesnippet";
 import { $, formatDate, registerEvent } from "./utils";
 import { state } from "./index";
-import { showTimesnippetList } from "./display";
+import { showProject, showTimesnippetList } from "./display";
 import * as bootstrap from "bootstrap"
+import { ProjectApi } from "./project";
 
 const CREATE_ID = "create";
 let timesnippetModal: bootstrap.Modal;
@@ -30,6 +31,7 @@ export function registerStaticButtons() {
     registerEvent(".button-start-now", "click", function () { createLiveSnippet() });
     registerEvent(".button-add-time", "click", function () { showSnippetModal() });
     registerEvent("#tsm_form", "submit", (event) => { saveSnippet(); event.preventDefault(); });
+    registerEvent("#pm_form", "submit", (event) => { saveProject(); event.preventDefault(); });
 }
 
 export function registerSnippetButtons() {
@@ -44,8 +46,72 @@ export function registerSnippetButtons() {
  * ------------------------
  */
 
-export function showProjectModal(projectId?: string) {
-    console.log("show project modal " + projectId)
+export async function showProjectModal(projectId?: string) {
+    let projectExists = (projectId != undefined);
+
+    let heading = $("#pm_heading");
+    let idInput = $("#pm_project_id") as HTMLInputElement;
+    let titleInput = $("#pm_title") as HTMLInputElement;
+    let descriptionInput = $("#pm_description") as HTMLInputElement;
+    let deleteButton = $(".button-delete-pm");
+
+    if (projectExists) {
+        let project = await ProjectApi.get(projectId);
+
+        heading.innerHTML = "Edit Project Data";
+        deleteButton.hidden = false;
+        deleteButton.onclick = () => { deleteProject(projectId) }
+
+        idInput.value = project.id;
+        titleInput.value = project.title;
+        descriptionInput.value = project.description;
+    }
+    else {
+        heading.innerHTML = "Create new Project";
+        deleteButton.hidden = true;
+
+        idInput.value = CREATE_ID;
+        titleInput.value = "";
+        descriptionInput.value = "";
+    }
+
+    projectModal.show();
+}
+
+export async function saveProject() {
+    try {
+        let idInput = $("#pm_project_id") as HTMLInputElement;
+        let projectId = idInput.value;
+        let titleInput = $("#pm_title") as HTMLInputElement;
+        let descriptionInput = $("#pm_description") as HTMLInputElement;
+
+        if (idInput.value == CREATE_ID) {
+            //create new Snippet
+            projectId = await ProjectApi.create(titleInput.value, descriptionInput.value, "");
+        }
+        else {
+            //update existing snippet
+            await ProjectApi.update(idInput.value, titleInput.value, descriptionInput.value, ""); //TODO save Notes
+        }
+
+        projectModal.hide();
+        window.location.href = `${process.env.OWN_SERVER_URL}/?project=${projectId}`
+        //showToast("Saved", "Your changes were saved", "success");
+    }
+    catch (err) {
+        console.error(err);
+        showToast("Can't save", err.message, "danger");
+    }
+}
+
+
+export async function deleteProject(projectId: string) {
+    prettyConfirm("Do you really want to delete this project?").then(async ()=>{
+        await ProjectApi.delete(projectId);
+        projectModal.hide(); //if delete was triggered form modal...
+        window.location.href = `${process.env.OWN_SERVER_URL}/`
+        //showToast("Bye Bye", "Your project was deleted", "success");        
+    }).catch(()=>{});
 }
 
 
