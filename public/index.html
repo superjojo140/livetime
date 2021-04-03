@@ -134,13 +134,20 @@
                         <h6>Presets:</h6>
                         <div class="row">
                             <div class="col">
-                                <button type="button" class="btn btn-info mr-2 btn-sm button-start-now">Start now</button>
-                                <button type="button" class="btn btn-info mr-2 btn-sm button-pretty-start">Pretty start</button>
-                                <button type="button" class="btn btn-outline-info mr-2 btn-sm button-time-preset" data-time="30">30 minutes</button>
-                                <button type="button" class="btn btn-outline-info mr-2 btn-sm button-time-preset" data-time="60">60 minutes</button>
-                                <button type="button" class="btn btn-outline-info mr-2 btn-sm button-time-preset" data-time="90">90 minutes</button>
-                                <button type="button" class="btn btn-outline-info mr-2 btn-sm button-time-preset" data-time="120">2 hours</button>
-                                <button type="button" class="btn btn-info mr-2 btn-sm button-pretty-end">Pretty End</button>
+                                <button type="button" class="btn btn-info mr-2 btn-sm button-start-now">Start
+                                    now</button>
+                                <button type="button" class="btn btn-info mr-2 btn-sm button-pretty-start">Pretty
+                                    start</button>
+                                <button type="button" class="btn btn-outline-info mr-2 btn-sm button-time-preset"
+                                    data-time="30">30 minutes</button>
+                                <button type="button" class="btn btn-outline-info mr-2 btn-sm button-time-preset"
+                                    data-time="60">60 minutes</button>
+                                <button type="button" class="btn btn-outline-info mr-2 btn-sm button-time-preset"
+                                    data-time="90">90 minutes</button>
+                                <button type="button" class="btn btn-outline-info mr-2 btn-sm button-time-preset"
+                                    data-time="120">2 hours</button>
+                                <button type="button" class="btn btn-info mr-2 btn-sm button-pretty-end">Pretty
+                                    End</button>
                                 <button type="button" class="btn btn-info mr-2 btn-sm button-end-now">End now</button>
                             </div>
                         </div>
@@ -198,6 +205,35 @@
                                 <i class="fas fa-save"></i>&nbsp;Save
                             </button>
                         </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Login Modal-->
+    <div class="modal fade" id="login_modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="login_modal_form">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <img class="img-logo" src="assets/logo.svg">
+                            <br>
+                            <span class="text-muted" id="livetime_login_message">Please log in in to use livetime</span>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <input type="text" class="form-control" id="livetime_login_username" placeholder="Username" autofocus>
+                            <label>Username</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <input type="password" class="form-control" id="livetime_login_password"
+                                placeholder="Password">
+                            <label>Password</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="button-submit-login btn btn-primary px-5">Login</button>
                     </div>
                 </form>
             </div>

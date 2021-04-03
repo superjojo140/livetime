@@ -1,3 +1,4 @@
+import { showLoginModal } from "./interaction";
 import { TimeSnippet, TimeSnippetApi } from "./timesnippet";
 
 /**
@@ -28,7 +29,7 @@ export function getOverallTime(snippetList: TimeSnippet[]): number {
     let sum = 0;
 
     for (const snippet of snippetList) {
-        let end =  (snippet.end == null) ? new Date() : snippet.end //Set current timepoint as temporary end for live snippets
+        let end = (snippet.end == null) ? new Date() : snippet.end //Set current timepoint as temporary end for live snippets
         sum += snippet.end.getTime() - snippet.start.getTime();
     }
     return sum;
@@ -107,6 +108,35 @@ export function formatDate(date: Date, templateString: string): string {
 export function uniqueDayNumber(date: Date): number {
     return Math.floor(date.getTime() / (1000 * 60 * 60 * 24))
 }
+
+/**
+ * -------------------------------
+ * --- LOGIN / USER MANAGEMENT ---
+ * -------------------------------
+ */
+
+export async function livetimeCheckLogin() {
+
+    const jwt = localStorage.getItem("sj_jwt");
+
+    let resp = await fetch(`${process.env.USER_SERVER_URL}/user`,
+        {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Authorization': `Bearer ${jwt}`
+            }
+        }
+    );
+
+    if (!resp.ok) {
+        showLoginModal();
+        throw new Error("Not logged in")
+    }
+    let user = await resp.json();
+    return user;
+}
+
+
 
 /**
  * ------------------

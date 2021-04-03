@@ -9,12 +9,14 @@ const CREATE_ID = "create";
 let timesnippetModal: bootstrap.Modal;
 let projectModal: bootstrap.Modal;
 let confirmModal: bootstrap.Modal;
+let loginModal: bootstrap.Modal;
 let toast: bootstrap.Toast;
 
 export function initBootstrapElements() {
     timesnippetModal = new bootstrap.Modal($('#time_snippet_modal'));
     projectModal = new bootstrap.Modal($('#project_modal'));
     confirmModal = new bootstrap.Modal($('#confirm_modal'));
+    loginModal = new bootstrap.Modal($('#login_modal'), { backdrop: "static", keyboard: false });
     toast = new bootstrap.Toast($("#toast"))
 }
 
@@ -32,7 +34,6 @@ export function registerStaticButtons() {
     registerEvent(".button-add-time", "click", function () { showSnippetModal() });
     registerEvent("#tsm_form", "submit", (event) => { saveSnippet(); event.preventDefault(); });
     registerEvent("#pm_form", "submit", (event) => { saveProject(); event.preventDefault(); });
-
 
     registerEvent(".button-pretty-start", "click", helperPrettyStart);
     registerEvent(".button-start-now", "click", helperStartNow);
@@ -320,4 +321,47 @@ function helperTimePreset() {
         let end = new Date(start.getTime() + millis);
         endInput.value = formatDate(end, "hh:mm");
     }
+}
+
+
+/**
+ * ----------------------------------
+ * ------- Handle Login -------------
+ * ----------------------------------
+ */
+async function livetimeLogin() {
+
+    let userInput = { username: undefined, password: undefined };
+    userInput.username = ($("#livetime_login_username") as HTMLInputElement).value;
+    userInput.password = ($("#livetime_login_password") as HTMLInputElement).value;
+
+    try {
+        let resp = await fetch(`${process.env.USER_SERVER_URL}/login`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify(userInput)
+        });
+
+        if (await resp.ok == false){
+            throw new Error("Could not load user data. Authentification failed");
+        }
+
+        let jsonResp = await resp.json();
+        const jwt = jsonResp.jwt;
+        localStorage.setItem("sj_jwt", jwt);
+        window.location.reload(); //Reload the page with the new JWT in localStorage
+    }
+    catch (error) {
+        $("#livetime_login_message").innerHTML = "Login failed - Please try again!";
+        console.warn(error);
+    }
+
+}
+
+export function showLoginModal() {
+    registerEvent("#login_modal_form", "submit", (event) => {livetimeLogin(); event.preventDefault(); });
+    loginModal.show();
 }
