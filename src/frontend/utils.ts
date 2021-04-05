@@ -136,6 +136,13 @@ export async function livetimeCheckLogin() {
     return user;
 }
 
+export function loadMenu(){
+     //show menu from superjojode
+     let menuScript = document.createElement("script");
+     menuScript.src = `${process.env.USER_SERVER_URL}/menu/js`;
+     document.body.appendChild(menuScript);
+}
+
 
 
 /**

@@ -10,6 +10,7 @@ let state = new Utils.State();
 
 async function start() {
     try {
+        Utils.loadMenu();
         initBootstrapElements();
         await livetimeCheckLogin();
         setInterval(() => { showTimesnippetList(state.projectId) }, ONCE_PER_MINUTE) //Auto update snippet list every minute
