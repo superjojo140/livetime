@@ -28,6 +28,7 @@ export async function showProject(projectId: string) {
     })
     if (projectId == undefined) {
         showMessageCard("Welcome back!", "", "Please select a project or create a new one.", "secondary");
+        registerStaticButtons();
         return;
     }
 
