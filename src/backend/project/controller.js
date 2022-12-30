@@ -1,11 +1,13 @@
 const express = require("express");
 const timeSnippetController = require("./../timesnippet/controller");
+const invoiceController = require("./../invoice/controller");
 const projectService = require("./service");
 const errorService = require("./../error/service");
 
 const router = express.Router();
 //Use timesnippetController if neccessary
 router.use("/:projectId/timesnippets", timeSnippetController);
+router.use("/:projectId/invoices", invoiceController);
 //Register own routes
 router.get("/", getAllProjects);
 router.get("/:projectId", getProject);
