@@ -10,12 +10,15 @@ let timesnippetModal: bootstrap.Modal;
 let projectModal: bootstrap.Modal;
 let confirmModal: bootstrap.Modal;
 let loginModal: bootstrap.Modal;
+let invoiceModal: bootstrap.Modal;
 let toast: bootstrap.Toast;
 
 export function initBootstrapElements() {
     timesnippetModal = new bootstrap.Modal($('#time_snippet_modal'));
     projectModal = new bootstrap.Modal($('#project_modal'));
     confirmModal = new bootstrap.Modal($('#confirm_modal'));
+    invoiceModal = new bootstrap.Modal($('#invoice_modal'));
+    invoiceModal.show();
     loginModal = new bootstrap.Modal($('#login_modal'), { backdrop: "static", keyboard: false });
     toast = new bootstrap.Toast($("#toast"))
 }

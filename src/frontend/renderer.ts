@@ -19,8 +19,8 @@ export function renderTimesnippet(snippet: TimeSnippet): string {
     let durationMillis = snippet.end.getTime() - snippet.start.getTime();
     let duration = formatTimespan(durationMillis);
 
-    let start = formatDate(snippet.start,'hh:mm');
-    let end = formatDate(snippet.end,'hh:mm');
+    let start = formatDate(snippet.start, 'hh:mm');
+    let end = formatDate(snippet.end, 'hh:mm');
 
     let fromTo = isLive ? `Started: ${start}` : `${start} - ${end}`;
     let secondButton = isLive ? `<button class="btn btn-outline-success button-done-time" type="button" data-snippet-id="${snippet.id}"><i
@@ -157,9 +157,17 @@ export function renderProjectDetails(project: Project) {
         <div class="card-body">
             <div class="row d-flex flex-row-reverse">
                 <div class="col-md-2 text-end">
-                    <button class="btn btn-lg btn-outline-light text-dark button-settings-project" data-project-id="${project.id}">
+                    <button class="btn btn-lg btn-outline-light text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-lg fas fa-cog"></i>
                     </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item button-settings-project" data-project-id="${project.id}">
+                        <i class="fas fa-wrench"></i> Project Settings
+                        </a></li>
+                        <li><a class="dropdown-item" data-project-id="${project.id}">
+                        <i class="fas fa-money-bill-wave"></i> Invoices
+                        </a></li>
+                    </ul>
                 </div>
                 <div class="col-md-8 text-center">
                     <h2>${project.title}</h2>
