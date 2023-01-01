@@ -46,6 +46,30 @@ export class InvoiceAPI {
         return invoiceList;
     }
 
+    static async getUnassigned(projectId: string): Promise<TimeSnippet[]> {
+        const jwt = localStorage.getItem("sj_jwt");
+
+        let resp = await fetch(`projects/${projectId}/invoices/unassigned`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Authorization': `Bearer ${jwt}`
+            }
+        });
+
+        if (!resp.ok) {
+            throw new Error("Invoice List could not be fetched.")
+        }
+
+        let timeSnippetList = await resp.json();
+
+        for (const timeSnippetData of timeSnippetList) {
+            timeSnippetData.start = timeSnippetData.start ? new Date(timeSnippetData.start) : null;
+            timeSnippetData.end = timeSnippetData.end ? new Date(timeSnippetData.end) : null;
+        }
+        return timeSnippetList;
+    }
+
 
 
 

@@ -1,3 +1,5 @@
+import { state } from ".";
+import { Invoice } from "./invoice";
 import { Project } from "./project";
 import { TimeSnippet } from "./timesnippet";
 import { formatDate, formatTimespan, uniqueDayNumber } from "./utils";
@@ -189,6 +191,36 @@ export function renderProjectDetails(project: Project) {
             </div>
         </div>
     </div>`;
+}
+
+/**
+ * @param list list of invoices to be rendered
+ */
+export function renderInvoiceTable(list: Invoice[]): string {
+    let html = `<thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">First Snippet</th>
+                        <th scope="col">Last Snippet</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+
+    for (const invoice of list) {
+        html += `<tr>
+                    <td>${invoice.id}</td>
+                    <td>${formatDate(invoice.date,"DD.MM.YYYY")}</td>
+                    <td>${formatDate(invoice.firstStart,"DD.MM.YYYY")}</td>
+                    <td>${formatDate(invoice.lastStart,"DD.MM.YYYY")}</td>
+                    <td><button class="btn btn-rounded btn-secondary livetime-invoice-export-button" data-invoice-id="${invoice.id}"><i class="fas fa-file-export"></i> Export</button></td>
+                </tr>`
+    }
+
+    html += `</tbody>`;
+    return html;
 }
 
 /**

@@ -4,11 +4,14 @@ import { state } from "./index";
 import { showProject, showTimesnippetList } from "./display";
 import * as bootstrap from "bootstrap"
 import { ProjectApi } from "./project";
+import { renderInvoiceTable } from "./renderer";
+import { InvoiceAPI } from "./invoice";
 
 const CREATE_ID = "create";
 let timesnippetModal: bootstrap.Modal;
 let projectModal: bootstrap.Modal;
 let confirmModal: bootstrap.Modal;
+let alertModal: bootstrap.Modal;
 let loginModal: bootstrap.Modal;
 let invoiceModal: bootstrap.Modal;
 let toast: bootstrap.Toast;
@@ -17,6 +20,7 @@ export function initBootstrapElements() {
     timesnippetModal = new bootstrap.Modal($('#time_snippet_modal'));
     projectModal = new bootstrap.Modal($('#project_modal'));
     confirmModal = new bootstrap.Modal($('#confirm_modal'));
+    alertModal = new bootstrap.Modal($('#alert_modal'));
     invoiceModal = new bootstrap.Modal($('#invoice_modal'));
     loginModal = new bootstrap.Modal($('#login_modal'), { backdrop: "static", keyboard: false });
     toast = new bootstrap.Toast($("#toast"))
@@ -92,23 +96,32 @@ export async function showProjectModal(projectId?: string) {
 }
 
 export async function showInvoiceModal(projectId: string) {
+    $("#livetime_invoice_create_form").style.display = "none";
 
-    // let heading = $("#pm_heading");
-    // let idInput = $("#pm_project_id") as HTMLInputElement;
-    // let titleInput = $("#pm_title") as HTMLInputElement;
-    // let descriptionInput = $("#pm_description") as HTMLInputElement;
-    // let deleteButton = $(".button-delete-pm");
+    let unassignedList = await InvoiceAPI.getUnassigned(projectId);
+    let unassignedCount = unassignedList.length;
+    $("#livetime_invoice_unassigned_count").innerHTML = String(unassignedCount);
 
-    //     let project = await ProjectApi.get(projectId);
+    if (unassignedCount > 0) {
+        let firstUnassigned = unassignedList[unassignedCount - 1];
+        $("#livetime_invoice_unassigned_first").innerHTML = formatDate(firstUnassigned.start, "DD.MM.YYYY");
+        let lastUnassigned = unassignedList[0];
+        $("#livetime_invoice_unassigned_last").innerHTML = formatDate(lastUnassigned.start, "DD.MM.YYYY");
+    } else {
+        $("#livetime_invoice_unassigned_first").innerHTML = "??";
+        $("#livetime_invoice_unassigned_last").innerHTML = "??";
+    }
 
-    //     heading.innerHTML = "Edit Project Data";
-    //     deleteButton.hidden = false;
-    //     deleteButton.onclick = () => { deleteProject(projectId) }
+    let invoiceList = await InvoiceAPI.getAll(projectId);
+    let invoiceTable = renderInvoiceTable(invoiceList);
+    $("#livetime_invoice_table").innerHTML = invoiceTable;
 
-    //     idInput.value = project.id;
-    //     titleInput.value = project.title;
-    //     descriptionInput.value = project.description;
-   
+    registerEvent(".livetime-invoice-export-button", "click", async function () {
+        let invoiceId = this.getAttribute('data-invoice-id');
+        let snippetList = await InvoiceAPI.getSnippetsByInvoice(projectId, invoiceId);
+        invoiceModal.hide();
+        prettyAlert(`JSON export for invoice <b>${invoiceId}</b>`, `<code>${JSON.stringify(snippetList)}<code>`);
+    })
 
     invoiceModal.show();
 }
@@ -252,6 +265,12 @@ export function showToast(title: string, text: string, theme: string) {
     toast.show();
 }
 
+export function prettyAlert(title: string, text: string): void {
+    $("#alert_modal_title").innerHTML = title;
+    $("#alert_modal_body").innerHTML = text;
+    alertModal.show();
+}
+
 export function prettyConfirm(text: string): Promise<void> {
     return new Promise(function (resolve, reject) {
         $("#confirm_modal_body").innerHTML = text;
@@ -372,7 +391,7 @@ async function livetimeLogin() {
             body: JSON.stringify(userInput)
         });
 
-        if (await resp.ok == false){
+        if (await resp.ok == false) {
             throw new Error("Could not load user data. Authentification failed");
         }
 
@@ -389,6 +408,6 @@ async function livetimeLogin() {
 }
 
 export function showLoginModal() {
-    registerEvent("#login_modal_form", "submit", (event) => {livetimeLogin(); event.preventDefault(); });
+    registerEvent("#login_modal_form", "submit", (event) => { livetimeLogin(); event.preventDefault(); });
     loginModal.show();
 }

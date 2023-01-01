@@ -32,3 +32,9 @@ module.exports.getInvoiceList = async function (projectId) {
 
     return invoiceData;
 }
+
+module.exports.getNotAssignedSnippetInfo = async function (projectId) {
+    const queryCmd = `SELECT * FROM timesnippets WHERE invoice = '0' AND id IN (SELECT timesnippetid FROM projects_timesnippets WHERE projectid = '${projectId}') ORDER BY start DESC`;
+    let snippetData = await dbService.query(queryCmd);
+    return snippetData;
+}

@@ -5,6 +5,7 @@ const invoiceService = require("./service");
 const router = express.Router({ mergeParams: true }); //mergeParams to access parent router's parameters
 router.post("/create", createInvoice);
 router.get("/list", getInvoiceList);
+router.get("/unassigned", getNotAssignedSnippetInfo);
 router.get("/:invoiceId", getInvoiceSnippets);
 module.exports = router;
 
@@ -36,6 +37,15 @@ async function getInvoiceList(req, res, next) {
     try {
         const projectId = req.params.projectId;
         const invoices = await invoiceService.getInvoiceList(projectId);
+        res.status(200).json(invoices);
+    }
+    catch (e) { next(e) }
+}
+
+async function getNotAssignedSnippetInfo(req, res, next) {
+    try {
+        const projectId = req.params.projectId;
+        const invoices = await invoiceService.getNotAssignedSnippetInfo(projectId);
         res.status(200).json(invoices);
     }
     catch (e) { next(e) }
