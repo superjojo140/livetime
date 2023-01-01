@@ -164,7 +164,7 @@ export function renderProjectDetails(project: Project) {
                         <li><a class="dropdown-item button-settings-project" data-project-id="${project.id}">
                         <i class="fas fa-wrench"></i> Project Settings
                         </a></li>
-                        <li><a class="dropdown-item" data-project-id="${project.id}">
+                        <li><a class="dropdown-item button-invoices-modal" data-project-id="${project.id}">
                         <i class="fas fa-money-bill-wave"></i> Invoices
                         </a></li>
                     </ul>

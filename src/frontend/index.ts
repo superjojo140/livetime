@@ -1,5 +1,6 @@
 import { showProject, showTimesnippetList } from "./display";
 import { initBootstrapElements, showToast } from "./interaction";
+import { InvoiceAPI } from "./invoice";
 import { ProjectApi } from "./project";
 import { TimeSnippetApi } from "./timesnippet";
 import * as Utils from "./utils";
@@ -22,28 +23,9 @@ async function start() {
 start();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 let pApi = ProjectApi;
 let tApi = TimeSnippetApi;
+let iApi = InvoiceAPI;
 let toast = showToast;
-export { pApi, tApi, toast, state };
+export { iApi, pApi, tApi, toast, state };
 

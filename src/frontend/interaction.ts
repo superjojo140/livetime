@@ -18,7 +18,6 @@ export function initBootstrapElements() {
     projectModal = new bootstrap.Modal($('#project_modal'));
     confirmModal = new bootstrap.Modal($('#confirm_modal'));
     invoiceModal = new bootstrap.Modal($('#invoice_modal'));
-    invoiceModal.show();
     loginModal = new bootstrap.Modal($('#login_modal'), { backdrop: "static", keyboard: false });
     toast = new bootstrap.Toast($("#toast"))
 }
@@ -32,6 +31,9 @@ export function initBootstrapElements() {
 export function registerStaticButtons() {
     registerEvent(".button-new-project", "click", function () { showProjectModal() });
     registerEvent(".button-settings-project", "click", function () { showProjectModal(this.getAttribute('data-project-id')) });
+
+    registerEvent(".button-invoices-modal", "click", function () { showInvoiceModal(this.getAttribute('data-project-id')) });
+    registerEvent("#livetime_invoice_assign_button", "click", function () { $("#livetime_invoice_create_form").style.display = "block"; });
 
     registerEvent(".button-live-snippet", "click", function () { createLiveSnippet() });
     registerEvent(".button-add-time", "click", function () { showSnippetModal() });
@@ -87,6 +89,28 @@ export async function showProjectModal(projectId?: string) {
     }
 
     projectModal.show();
+}
+
+export async function showInvoiceModal(projectId: string) {
+
+    // let heading = $("#pm_heading");
+    // let idInput = $("#pm_project_id") as HTMLInputElement;
+    // let titleInput = $("#pm_title") as HTMLInputElement;
+    // let descriptionInput = $("#pm_description") as HTMLInputElement;
+    // let deleteButton = $(".button-delete-pm");
+
+    //     let project = await ProjectApi.get(projectId);
+
+    //     heading.innerHTML = "Edit Project Data";
+    //     deleteButton.hidden = false;
+    //     deleteButton.onclick = () => { deleteProject(projectId) }
+
+    //     idInput.value = project.id;
+    //     titleInput.value = project.title;
+    //     descriptionInput.value = project.description;
+   
+
+    invoiceModal.show();
 }
 
 export async function saveProject() {
