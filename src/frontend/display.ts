@@ -96,3 +96,13 @@ export function hideInvoiceCreateForm() {
     let assignBtn = $("#livetime_invoice_assign_button") as HTMLInputElement;
     assignBtn.disabled = false;
 }
+
+export function toggleProjectDescriptionCollapse() {
+    let div = $("#livetime_project_details_description");
+
+    if (div.classList.contains("project-description-collapsed")) {
+        div.classList.remove("project-description-collapsed");
+    } else {
+        div.classList.add("project-description-collapsed");
+    }
+}

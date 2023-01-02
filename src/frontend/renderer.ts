@@ -173,9 +173,10 @@ export function renderProjectDetails(project: Project) {
                 </div>
                 <div class="col-md-8 text-center">
                     <h2>${project.title}</h2>
-                    <span class="text-muted">
+                    <div class="text-muted project-description-collapsed" id="livetime_project_details_description">
                         ${project.description}
-                    </span>
+                    </div>
+                    <a class="btn btn-outline-secondary btn-sm" id="livetime_project_description_toggle_button">Show more Details</a>
                     <br>
                     <div class="btn-group mt-4" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-primary px-3">Time</button>

@@ -1,7 +1,7 @@
 import { TimeSnippetApi } from "./timesnippet";
 import { $, formatDate, registerEvent } from "./utils";
 import { state } from "./index";
-import { hideInvoiceCreateForm, showInvoiceCreateForm, showProject, showTimesnippetList } from "./display";
+import { hideInvoiceCreateForm, showInvoiceCreateForm, showProject, showTimesnippetList, toggleProjectDescriptionCollapse } from "./display";
 import * as bootstrap from "bootstrap"
 import { ProjectApi } from "./project";
 import { renderInvoiceTable } from "./renderer";
@@ -34,6 +34,7 @@ export function initBootstrapElements() {
 
 export function registerStaticButtons() {
     registerEvent(".button-new-project", "click", function () { showProjectModal() });
+    registerEvent("#livetime_project_description_toggle_button", "click", toggleProjectDescriptionCollapse);
     registerEvent(".button-settings-project", "click", function () { showProjectModal(this.getAttribute('data-project-id')) });
 
     registerEvent(".button-invoices-modal", "click", function () { showInvoiceModal() });
