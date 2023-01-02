@@ -1,7 +1,7 @@
 import { TimeSnippetApi } from "./timesnippet";
 import { $, formatDate, registerEvent } from "./utils";
 import { state } from "./index";
-import { showProject, showTimesnippetList } from "./display";
+import { hideInvoiceCreateForm, showInvoiceCreateForm, showProject, showTimesnippetList } from "./display";
 import * as bootstrap from "bootstrap"
 import { ProjectApi } from "./project";
 import { renderInvoiceTable } from "./renderer";
@@ -36,8 +36,9 @@ export function registerStaticButtons() {
     registerEvent(".button-new-project", "click", function () { showProjectModal() });
     registerEvent(".button-settings-project", "click", function () { showProjectModal(this.getAttribute('data-project-id')) });
 
-    registerEvent(".button-invoices-modal", "click", function () { showInvoiceModal(this.getAttribute('data-project-id')) });
-    registerEvent("#livetime_invoice_assign_button", "click", function () { $("#livetime_invoice_create_form").style.display = "block"; });
+    registerEvent(".button-invoices-modal", "click", function () { showInvoiceModal() });
+    registerEvent("#livetime_invoice_assign_button", "click", showInvoiceCreateForm);
+    registerEvent("#livetime_invoice_create_cancel_button", "click", hideInvoiceCreateForm);
     registerEvent("#livetime_invoice_create_form", "submit", (event) => { event.preventDefault(); assignToNewInvoice(); });
 
     registerEvent(".button-live-snippet", "click", function () { createLiveSnippet() });
@@ -96,9 +97,11 @@ export async function showProjectModal(projectId?: string) {
     projectModal.show();
 }
 
-export async function showInvoiceModal(projectId: string) {
+export async function showInvoiceModal() {
     try {
-        $("#livetime_invoice_create_form").style.display = "none";
+        let projectId = state.projectId;
+        hideInvoiceCreateForm();
+        $("#livetime_invoice_assign_alert").style.display = "none";
 
         let unassignedList = await InvoiceAPI.getUnassigned(projectId);
         let unassignedCount = unassignedList.length;
@@ -109,9 +112,7 @@ export async function showInvoiceModal(projectId: string) {
             $("#livetime_invoice_unassigned_first").innerHTML = formatDate(firstUnassigned.start, "DD.MM.YYYY");
             let lastUnassigned = unassignedList[0];
             $("#livetime_invoice_unassigned_last").innerHTML = formatDate(lastUnassigned.start, "DD.MM.YYYY");
-        } else {
-            $("#livetime_invoice_unassigned_first").innerHTML = "??";
-            $("#livetime_invoice_unassigned_last").innerHTML = "??";
+            $("#livetime_invoice_assign_alert").style.display = "block";
         }
 
         let invoiceList = await InvoiceAPI.getAll(projectId);
@@ -126,7 +127,7 @@ export async function showInvoiceModal(projectId: string) {
         })
 
         invoiceModal.show();
-    }catch(err){
+    } catch (err) {
         console.error(err);
         showToast("Can't open invoices", err.message, "danger");
     }
@@ -140,8 +141,9 @@ export async function assignToNewInvoice() {
         let timestamp = new Date(invoiceDate.value).toISOString();
 
         let resp = await InvoiceAPI.create(state.projectId, invoiceId, timestamp);
-        showToast(`Assigned to new invoice`, `Created new invoice with id "${resp}" and assigned all free snippets.`, "success")
-        showInvoiceModal(state.projectId);
+        showToast(`Assigned to new invoice`, `Created new invoice with id "${resp}" and assigned all free snippets.`, "success");
+        showTimesnippetList(state.projectId);
+        showInvoiceModal();
     }
     catch (err) {
         console.error(err);

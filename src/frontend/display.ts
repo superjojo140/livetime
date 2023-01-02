@@ -82,3 +82,17 @@ export function showAddSnippetButtons() {
     $("#add_snippet_buttons").innerHTML = data.top;
     $("#fab_container").innerHTML = data.fab;
 }
+
+export function showInvoiceCreateForm() {
+    $("#livetime_invoice_create_form").style.display = "block";
+    let assignBtn = $("#livetime_invoice_assign_button") as HTMLInputElement;
+    assignBtn.disabled = true;
+}
+
+export function hideInvoiceCreateForm() {
+    $("#livetime_invoice_create_form").style.display = "none";
+    let form = $("#livetime_invoice_create_form") as HTMLFormElement;
+    form.reset();
+    let assignBtn = $("#livetime_invoice_assign_button") as HTMLInputElement;
+    assignBtn.disabled = false;
+}

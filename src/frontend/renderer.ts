@@ -99,7 +99,7 @@ export function renderTimesnippet(snippet: TimeSnippet): string {
  * @param list List of timesippets to be rendered
  */
 export function renderTimesnippetList(list: TimeSnippet[]): string {
-    if (list.length < 1) { return renderMessageCard("Let's get started", "No snippets in this project", "Add snippets by clicking on the blue or green buttons above.", "primary"); }
+    if (list.length < 1) { return renderMessageCard("Let's get started", "No snippets in this project", "Add snippets by clicking on the blue or green buttons above.<br>Snippets assigned to invoices are not displayed here. Use the invoices view to export billed snippets.", "primary"); }
 
     let listHtml = "";
     let currentDay = -1;
