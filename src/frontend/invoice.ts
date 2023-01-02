@@ -73,7 +73,7 @@ export class InvoiceAPI {
 
 
 
-    static async create(projectId: string, invoiceId: string): Promise<string> {
+    static async create(projectId: string, invoiceId: string, timestamp:string): Promise<string> {
         const jwt = localStorage.getItem("sj_jwt");
 
         let resp = await fetch(`projects/${projectId}/invoices/create`, {
@@ -84,12 +84,13 @@ export class InvoiceAPI {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                invoiceId: invoiceId
+                invoiceId: invoiceId,
+                timestamp: timestamp
             })
         });
 
         if (!resp.ok) {
-            throw new Error("Invoice could not be created.")
+            throw new Error(`Invoice could not be created. Maybe the invoice id "${invoiceId}" already exists...?`)
         }
 
         let data = await resp.json();

@@ -38,6 +38,7 @@ export function registerStaticButtons() {
 
     registerEvent(".button-invoices-modal", "click", function () { showInvoiceModal(this.getAttribute('data-project-id')) });
     registerEvent("#livetime_invoice_assign_button", "click", function () { $("#livetime_invoice_create_form").style.display = "block"; });
+    registerEvent("#livetime_invoice_create_form", "submit", (event) => { event.preventDefault(); assignToNewInvoice(); });
 
     registerEvent(".button-live-snippet", "click", function () { createLiveSnippet() });
     registerEvent(".button-add-time", "click", function () { showSnippetModal() });
@@ -96,34 +97,56 @@ export async function showProjectModal(projectId?: string) {
 }
 
 export async function showInvoiceModal(projectId: string) {
-    $("#livetime_invoice_create_form").style.display = "none";
+    try {
+        $("#livetime_invoice_create_form").style.display = "none";
 
-    let unassignedList = await InvoiceAPI.getUnassigned(projectId);
-    let unassignedCount = unassignedList.length;
-    $("#livetime_invoice_unassigned_count").innerHTML = String(unassignedCount);
+        let unassignedList = await InvoiceAPI.getUnassigned(projectId);
+        let unassignedCount = unassignedList.length;
+        $("#livetime_invoice_unassigned_count").innerHTML = String(unassignedCount);
 
-    if (unassignedCount > 0) {
-        let firstUnassigned = unassignedList[unassignedCount - 1];
-        $("#livetime_invoice_unassigned_first").innerHTML = formatDate(firstUnassigned.start, "DD.MM.YYYY");
-        let lastUnassigned = unassignedList[0];
-        $("#livetime_invoice_unassigned_last").innerHTML = formatDate(lastUnassigned.start, "DD.MM.YYYY");
-    } else {
-        $("#livetime_invoice_unassigned_first").innerHTML = "??";
-        $("#livetime_invoice_unassigned_last").innerHTML = "??";
+        if (unassignedCount > 0) {
+            let firstUnassigned = unassignedList[unassignedCount - 1];
+            $("#livetime_invoice_unassigned_first").innerHTML = formatDate(firstUnassigned.start, "DD.MM.YYYY");
+            let lastUnassigned = unassignedList[0];
+            $("#livetime_invoice_unassigned_last").innerHTML = formatDate(lastUnassigned.start, "DD.MM.YYYY");
+        } else {
+            $("#livetime_invoice_unassigned_first").innerHTML = "??";
+            $("#livetime_invoice_unassigned_last").innerHTML = "??";
+        }
+
+        let invoiceList = await InvoiceAPI.getAll(projectId);
+        let invoiceTable = renderInvoiceTable(invoiceList);
+        $("#livetime_invoice_table").innerHTML = invoiceTable;
+
+        registerEvent(".livetime-invoice-export-button", "click", async function () {
+            let invoiceId = this.getAttribute('data-invoice-id');
+            let snippetList = await InvoiceAPI.getSnippetsByInvoice(projectId, invoiceId);
+            invoiceModal.hide();
+            prettyAlert(`JSON export for invoice <b>${invoiceId}</b>`, `<code>${JSON.stringify(snippetList)}<code>`);
+        })
+
+        invoiceModal.show();
+    }catch(err){
+        console.error(err);
+        showToast("Can't open invoices", err.message, "danger");
     }
+}
 
-    let invoiceList = await InvoiceAPI.getAll(projectId);
-    let invoiceTable = renderInvoiceTable(invoiceList);
-    $("#livetime_invoice_table").innerHTML = invoiceTable;
+export async function assignToNewInvoice() {
+    try {
+        let idInput = $("#livetime_invoice_assign_id") as HTMLInputElement;
+        let invoiceId = idInput.value;
+        let invoiceDate = $("#livetime_invoice_assign_date") as HTMLInputElement;
+        let timestamp = new Date(invoiceDate.value).toISOString();
 
-    registerEvent(".livetime-invoice-export-button", "click", async function () {
-        let invoiceId = this.getAttribute('data-invoice-id');
-        let snippetList = await InvoiceAPI.getSnippetsByInvoice(projectId, invoiceId);
-        invoiceModal.hide();
-        prettyAlert(`JSON export for invoice <b>${invoiceId}</b>`, `<code>${JSON.stringify(snippetList)}<code>`);
-    })
-
-    invoiceModal.show();
+        let resp = await InvoiceAPI.create(state.projectId, invoiceId, timestamp);
+        showToast(`Assigned to new invoice`, `Created new invoice with id "${resp}" and assigned all free snippets.`, "success")
+        showInvoiceModal(state.projectId);
+    }
+    catch (err) {
+        console.error(err);
+        showToast("Can't assign", err.message, "danger");
+    }
 }
 
 export async function saveProject() {

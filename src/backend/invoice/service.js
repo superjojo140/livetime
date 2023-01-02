@@ -24,10 +24,12 @@ module.exports.getInvoiceList = async function (projectId) {
     for (let invoice of invoiceData) {
         const queryCmd = `SELECT start FROM timesnippets WHERE invoice = '${invoice.id}' ORDER BY start DESC LIMIT 1`;
         let result = await dbService.query(queryCmd);
-        invoice.lastStart = result[0].start;
-        const queryCmd2 = `SELECT start FROM timesnippets WHERE invoice = '${invoice.id}' ORDER BY start ASC LIMIT 1`;
-        let result2 = await dbService.query(queryCmd2);
-        invoice.firstStart = result2[0].start;
+        if (result[0]) {
+            invoice.lastStart = result[0].start;
+            const queryCmd2 = `SELECT start FROM timesnippets WHERE invoice = '${invoice.id}' ORDER BY start ASC LIMIT 1`;
+            let result2 = await dbService.query(queryCmd2);
+            invoice.firstStart = result2[0].start;
+        }
     }
 
     return invoiceData;

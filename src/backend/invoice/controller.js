@@ -13,10 +13,9 @@ async function createInvoice(req, res, next) {
     try {
         const projectId = req.params.projectId;
         const invoiceId = req.body.invoiceId;
-
-        let timestamp = new Date().toISOString();
+        let timestamp = req.body.timestamp;
+        
         timestamp = timestamp.substring(0, timestamp.length - 1);
-
         await invoiceService.createInvoice(invoiceId,timestamp,projectId);
         await invoiceService.assignInvoice(projectId, invoiceId);
         res.status(200).json({ message: "Created invoice.", id: invoiceId });
