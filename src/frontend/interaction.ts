@@ -14,6 +14,7 @@ let confirmModal: bootstrap.Modal;
 let alertModal: bootstrap.Modal;
 let loginModal: bootstrap.Modal;
 let invoiceModal: bootstrap.Modal;
+let projectAttributesModal: bootstrap.Modal;
 let toast: bootstrap.Toast;
 
 export function initBootstrapElements() {
@@ -22,6 +23,7 @@ export function initBootstrapElements() {
     confirmModal = new bootstrap.Modal($('#confirm_modal'));
     alertModal = new bootstrap.Modal($('#alert_modal'));
     invoiceModal = new bootstrap.Modal($('#invoice_modal'));
+    projectAttributesModal = new bootstrap.Modal($('#project_attributes_modal'));
     loginModal = new bootstrap.Modal($('#login_modal'), { backdrop: "static", keyboard: false });
     toast = new bootstrap.Toast($("#toast"))
 }
@@ -36,6 +38,9 @@ export function registerStaticButtons() {
     registerEvent(".button-new-project", "click", function () { showProjectModal() });
     registerEvent("#livetime_project_description_toggle_button", "click", toggleProjectDescriptionCollapse);
     registerEvent(".button-settings-project", "click", function () { showProjectModal(this.getAttribute('data-project-id')) });
+
+    registerEvent(".button-project-attributes-modal", "click", function () { showProjectAttributesModal() });
+    showProjectAttributesModal(); //TODO Remove test statement!!!
 
     registerEvent(".button-invoices-modal", "click", function () { showInvoiceModal() });
     registerEvent("#livetime_invoice_assign_button", "click", showInvoiceCreateForm);
@@ -131,6 +136,16 @@ export async function showInvoiceModal() {
     } catch (err) {
         console.error(err);
         showToast("Can't open invoices", err.message, "danger");
+    }
+}
+
+export async function showProjectAttributesModal() {
+    try {
+        let projectId = state.projectId;
+        projectAttributesModal.show();
+    } catch (err) {
+        console.error(err);
+        showToast("Can't load project attributes", err.message, "danger");
     }
 }
 
