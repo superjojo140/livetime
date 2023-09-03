@@ -340,30 +340,71 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col" style="width: 40%;">Description</th>
+                                <th scope="col">Value</th>
+                                <th scope="col" style="width: 15%;"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td><small><b>pauschalStunden</b></small></td>
+                                <td><small>Anzahl der Stunden, die in dem Pauschalbetrag enthalten sind.</small></td>
+                                <td>10</td>
+                                <td>
+                                    <button class="btn btn-rounded btn-primary livetime-invoice-export-button" data-invoice-id="${invoice.id}" title="Edit"><i class="fas fa-pen"></i></button>
+                                    <button class="btn btn-rounded btn-danger livetime-invoice-export-button" data-invoice-id="${invoice.id}" title="Delete"><i class="far fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="text" class="form-control" value="pauschal Stunden"></td>
+                                <td><textarea class="form-control">Anzahl der Stunden, die in dem Pauschalbetrag enthalten sind.</textarea></td>
+                                <td><input type="number" class="form-control" value="10"></td>
+                                <td>
+                                    <button class="btn btn-rounded btn-success livetime-invoice-export-button" data-invoice-id="${invoice.id}"><i class="far fa-save"></i> Save</button>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>pauschalStunden</td>
+                                <td>Anzahl der Stunden, die in dem Pauschalbetrag enthalten sind.</td>
+                                <td>Oliver Clvaes ist hier der richtige Wert</td>
+                                <td><button class="btn btn-rounded btn-danger livetime-invoice-export-button" data-invoice-id="${invoice.id}"><i class="far fa-trash-alt"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>pauschalStunden</td>
+                                <td>Anzahl der Stunden, die in dem Pauschalbetrag enthalten sind.</td>
+                                <td>10</td>
+                                <td><button class="btn btn-rounded btn-danger livetime-invoice-export-button" data-invoice-id="${invoice.id}"><i class="far fa-trash-alt"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
                     <div class="alert alert-info">
                         <small><i class="fas fa-info-circle"></i>
-                            All attributes specified here, can be used as placeholders with <span class="badge bg-dark">{{attributesName}}</span> in your <b>latex templates</b>.
+                            All attributes specified here, can be used as placeholders with <span class="badge bg-dark">{{attributeName}}</span> in your <b>latex templates</b>.
                             <hr>
                             There are some <b>reserved attribute names</b> to handle income calculation:
                             <br>
                         </small>
                         <h5>
-                            <span class="badge rounded-pill bg-primary">Primary</span>
-                            <span class="badge rounded-pill bg-primary">Primary</span>
-                            <span class="badge rounded-pill bg-primary">Primary</span>
-                            <span class="badge rounded-pill bg-primary">Primary</span>
-                            <span class="badge rounded-pill bg-primary">Primary</span>
-                            <span class="badge rounded-pill bg-primary">Primary</span>
-                            <span class="badge rounded-pill bg-primary">Primary</span>
-                            
+                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
+                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
+                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
+                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
+                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
+                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
+
                         </h5>
 
                     </div>
-                    <br>
-
-                    <table class="table table-hover" id="livetime_invoice_table">
-                        <!-- Content is rendered by renderer-->
-                    </table>
 
 
                 </div>
