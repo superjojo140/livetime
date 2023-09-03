@@ -1,12 +1,19 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
+-- Host: localhost
+-- Erstellungszeit: 03. Sep 2023 um 11:18
+-- Server-Version: 11.1.2-MariaDB
+-- PHP-Version: 8.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+--
+-- Datenbank: `livetime`
+--
 
 -- --------------------------------------------------------
 
@@ -18,6 +25,20 @@ CREATE TABLE `invoices` (
   `id` varchar(100) NOT NULL,
   `date` timestamp NULL DEFAULT NULL,
   `projectId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `projectattributes`
+--
+
+CREATE TABLE `projectattributes` (
+  `projectid` int(11) NOT NULL,
+  `name` varchar(300) NOT NULL,
+  `description` text NOT NULL,
+  `datatype` varchar(100) NOT NULL,
+  `value` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -79,6 +100,12 @@ CREATE TABLE `timesnippets` (
 --
 ALTER TABLE `invoices`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `projectattributes`
+--
+ALTER TABLE `projectattributes`
+  ADD PRIMARY KEY (`projectid`,`name`);
 
 --
 -- Indizes für die Tabelle `projects`
