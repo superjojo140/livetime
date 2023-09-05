@@ -175,3 +175,10 @@ input:active {
 .link-primary{
     cursor: pointer;
 }
+
+.btn-xs{
+    --bs-btn-padding-y: 0.2rem;
+    --bs-btn-padding-x: 0.5rem;
+    --bs-btn-font-size: 0.7rem;
+    --bs-btn-border-radius: 0.25rem;
+}

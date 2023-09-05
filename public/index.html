@@ -340,6 +340,85 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
+                    <div class="alert alert-primary">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-3">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-plus-circle"></i> New attribute
+                                </button>
+                            </div>
+                            <div class="col-md-9" style="border-left: 2px solid var(--bs-alert-border-color);">
+                                <small>
+                                    There are some <b>reserved attribute names</b> to handle income calculation:
+                                    <br>
+                                </small>
+                                <h5>
+                                    <button class="btn btn-xs btn-outline-primary btn-rounded">
+                                        <i class="fas fa-plus"></i>
+                                        pauschalStunden
+                                    </button>
+                                    <button class="btn btn-xs btn-outline-primary btn-rounded">
+                                        <i class="fas fa-plus"></i>
+                                        pauschalBetrag
+                                    </button>
+                                    <button class="btn btn-xs btn-outline-primary btn-rounded">
+                                        <i class="fas fa-plus"></i>
+                                        stundensatzBetrag
+                                    </button>
+
+                                </h5>
+                            </div>
+                        </div>
+
+                        <form>
+                            <div class="row mt-4">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="livetime_attribute_new_name" required>
+                                        <label for="livetime_attribute_new_name">Attribute Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="livetime_attribute_new_datatype" list="livetime_attribute_new_datatype_options" value="text" required>
+                                        <label>Datatype</label>
+                                        <datalist id="livetime_attribute_new_datatype_options">
+                                            <option value="text"></option>
+                                            <option value="number"></option>
+                                            <option value="date"></option>
+                                            <option value="time"></option>
+                                            <option value="email"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="" required>
+                                        <label>Attribute Value</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3 d-flex align-items-end justify-content-between">
+                                <div class="col-md-9">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                        <label for="floatingTextarea">Description</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 text-end">
+                                    <button class="btn btn-success">
+                                        <i class="far fa-save"></i> Save attribute
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+
                     <table class="table table-striped table-hover align-middle">
                         <thead>
                             <tr>
@@ -388,22 +467,10 @@
 
 
                     <div class="alert alert-info">
-                        <small><i class="fas fa-info-circle"></i>
+                        <small>
+                            <i class="fas fa-info-circle"></i>
                             All attributes specified here, can be used as placeholders with <span class="badge bg-dark">{{attributeName}}</span> in your <b>latex templates</b>.
-                            <hr>
-                            There are some <b>reserved attribute names</b> to handle income calculation:
-                            <br>
                         </small>
-                        <h5>
-                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
-                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
-                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
-                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
-                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
-                            <button class="btn btn-sm btn-primary btn-rounded">Primary</button>
-
-                        </h5>
-
                     </div>
 
 
