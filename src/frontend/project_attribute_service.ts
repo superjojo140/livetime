@@ -1,4 +1,4 @@
-export class ProjectAttributeApi {
+export class ProjectAttributeService {
 
     static async get(projectId: string, attributeId: string): Promise<ProjectAttribute> {
         const jwt = localStorage.getItem("sj_jwt");
